@@ -496,19 +496,11 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	GET_TOKEN ( tok )
 	
 	//expect a declaration type ##########################################
-	if ( expect ( ( tok.type == BYTE or tok.type == WORD or tok.type == DWORD or tok.type == QWORD or tok.type == TWORD or tok.type == IDENTIFIER ) , "Expecting Memory Type" ) == false )
-		return false;
+	if ( expect ( ( tok.type == BYTE or tok.type == WORD or tok.type == DWORD or tok.type == QWORD or tok.type == TWORD ) , "Expecting Memory Type" ) == false )
+			return false;
 	
-	//if this is a user-defined type ########
-	if ( tok.type == IDENTIFIER )
-	{
-		type = typeMap [ tok.lexeme ];
-	}
-	else
-	{
-		//save type ###########################################	
-		type = tok.type;
-	}
+	//save type ###########################################	
+	type = tok.type;
 	
 	//get the next token ##################################
 	GET_TOKEN ( tok )
@@ -681,7 +673,7 @@ bool basis ( int scope , symbol *& operand )
 				
 			}
 			//struct member operator ############
-			else if ( tok.type == '.' )
+//			else if ( tok.type == '.' )
 			{
 				//get the next token ###################################
 				GET_TOKEN ( tok )//get after .
@@ -1267,13 +1259,9 @@ bool structDeclaration ( int scope )
 		GET_TOKEN ( tok )
 	}
 	
-	//add a new type #######################
-	addNewType ( newType -> lexeme );
-	
-	//add the scope to the table ##########
 	scopes [ scope ].addSymbol ( newType );
+	//cout << "added scope " << endl;
 	
-	//check if the closing brace is there ###########
 	if ( expect ( ( tok.type == '}' ) , "Expecting }" ) == false )
 		return false;
 

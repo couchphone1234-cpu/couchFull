@@ -1,0 +1,62 @@
+IR instruction reference
+@@@@@@@@@@@@@@@@@@@@@@@@
+
+@ LABEL_INST
+equ = label symbol
+lhs = 0
+rhs = 0
+@ JUMP_INST
+equ = label symbol
+lhs = 0
+rhs = 0
+@ JUMP_TEST_INST
+equ = label symbol
+lhs = test value
+rhs = 0
+@ NEG_INST 
+equ = result
+lhs = operand
+rhs = 0
+@ ARRAY_INDEX
+equ = array name
+lhs = index
+rhs = 0
+@ PUSH
+equ = operand
+lhs = 0
+rhs = 0
+@ CALL
+equ = operand
+lhs = 0
+rhs = ?
+@ STRUCT_SELECTION
+equ = struct
+lhs = member
+rhs = 0
+@ MOVE
+equ = lhs
+lhs = rhs
+rhs = 0
+@ PRE_INC_INST
+equ = result
+lhs = operand
+rhs = 0
+@ PRE_DEC_INST
+equ = result
+lhs = operand
+rhs = 0
+@ POST_INC_INST
+equ = result
+lhs = operand
+rhs = 0
+@ POST_DEC_INST
+equ = result
+lhs = operand
+rhs = 0
+@ OTHER ( + , - , * , \ )
+equ = equ
+lhs = lhs
+rhs = rhs
+
+
+

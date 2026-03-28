@@ -43,29 +43,14 @@ func dword main ( )
 	var dword o;
 	var array [ 5 ];
 	
-
-	d = a [ 3 ] + ebx + processVars ( x , y ) + 1;
-	
 	struct mine
 	{
 		byte i;
 	};
 	
-	print ( "hello world " , d );
-
-	if ( a * z )
-	{
-		o = z + y;
-	}
-	else 
-	{
-		z = a + c;
-	}
-
-	while ( eax == 1 )
-	{
-		eax = ecx + 1;
-	}
+	var mine m;
 	
+	o = m.i;
+
 	return 0;
 }

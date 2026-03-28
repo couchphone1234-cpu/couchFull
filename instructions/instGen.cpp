@@ -310,8 +310,8 @@ int dumpInstructions ( )
 		}
 		else if ( instVec [ i ] -> type == NEG_INST )
 		{
-			if ( instVec [ i ] -> equ  != 0  )
-				cout << "NEG " << instVec [ i ] -> equ -> lexeme << " ";
+			if ( instVec [ i ] -> lhs  != 0  )
+				cout << "NEG " << instVec [ i ] -> lhs -> lexeme << " ";
 		}
 		
 		else if ( instVec [ i ] -> type == PRE_INC_INST )
@@ -332,6 +332,17 @@ int dumpInstructions ( )
 			if ( instVec [ i ] -> lhs != 0  )	
 				cout << instVec [ i ] -> lhs -> lexeme;
 			cout << " ] ";
+		}
+		//struct selection ############################
+		else if ( instVec [ i ] -> type == STRUCT_SELECTION )
+		{
+			if ( instVec [ i ] -> equ  != 0  )
+				cout << instVec [ i ] -> equ -> lexeme << " ";
+			
+			cout << ".";
+			
+			if ( instVec [ i ] -> lhs != 0  )	
+				cout << instVec [ i ] -> lhs -> lexeme;
 		}
 		
 		//output the notes @@@@@@@@@@@@@@@@@@@@@

@@ -74,7 +74,23 @@
 			cout << "### name " << sym.lexeme << " type " << sym.type << " scope " << sym.scope << " id " << sym.id << " cells " << sym.cells << endl;
 			return os;	
 		};
-		
+		//see if a member exists in the symbol ##########
+		int findMember ( string lexeme )
+		{
+			int i = 0;
+			int numMembers = members.size ( );//get the number of members
+			
+			//see if the member is in the member array #####
+			while ( i < numMembers )
+			{
+				//if the lexeme is found return true
+				if ( members [ i ] -> lexeme == lexeme )
+					return i;
+				i ++;
+			}
+			
+			return -1;
+		};
 	};
 	
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

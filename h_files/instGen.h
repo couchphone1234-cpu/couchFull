@@ -26,8 +26,8 @@
 	const int JUMP_INST = 1;
 	const int JUMP_TEST_INST = 2;
 	const int NEG_INST = 3;
-	const int INC_INST = 4;
-	const int DEC_INST = 5;
+	const int INC_INST = 4;//not used
+	const int DEC_INST = 5;//not used 
 	const int ARRAY_INDEX_INST = 6;
 	const int PUSH = 7;
 	const int CALL = 8;

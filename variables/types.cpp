@@ -69,7 +69,7 @@ int addNewType ( string name )
 { 
 	symbol newType;
 	
-	newType.initialize ( name , currentNewType , 0 , 0 );
+	newType.initialize ( name , currentNewType , 0 , 0 , STRUCT_CATEGORY );
 	typeArray.push_back ( newType );
 	typeMap [ name ] = currentNewType ++;
 	
@@ -93,19 +93,19 @@ int addNewType ( string name )
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
  symbol * addNewTypeMember ( int userDefinedType , string name , int type , int scope , int cells ) 
 { 
-	symbol member;
+	symbol * member = ( symbol * ) das.allocate ( sizeof ( symbol ) );
 	
 	//type out of range ###################################
 	if ( userDefinedType < 400 or userDefinedType >= currentNewType )
 		return 0;
 	
 	//initialize the new member #####################
-	member.initialize ( name , type , scope , cells );
+	member -> initialize ( name , type , scope , cells , STRUCT_CATEGORY );
 	
 	//add the member to the current type ###################
 	typeArray [ userDefinedType ].members.push_back ( member ); 
 
-	return & typeArray [ userDefinedType ].members.back ( );
+	return  typeArray [ userDefinedType ].members.back ( );
 }
 
 

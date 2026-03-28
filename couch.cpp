@@ -69,7 +69,7 @@
 	//#include "libs/dynamicAllocator.cpp"
 	#include "libs/dynamicTempAllocator.cpp"
 	#include "data/globalData.cpp"
-	
+	#include "variables/types.cpp"
 	#include "variables/dataEnvironment.cpp"
 	#include "variables/scopes.cpp"
 	//#include "variables/types.cpp"
@@ -114,7 +114,7 @@ int main ( int argc , char * argv [ ] )
 	#endif
 	cout << "here" << endl;
 	dumpInstructions ( );
-	dumpScopes ( );
+	//dumpScopes ( );
 	
 	return 0; 
 }
