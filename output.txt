@@ -1,0 +1,327 @@
+Instructions *******************************
+instruction: 0x21310e9ac30 0 243
+
+Scope 67@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+### name global type 293 scope 0 id 0 cells 0 varNum 67
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ variables #####
+### name ah type 261 scope 0 id 0 cells 0
+
+### name al type 262 scope 0 id 1 cells 0
+
+### name ax type 264 scope 0 id 2 cells 0
+
+### name bh type 265 scope 0 id 3 cells 0
+
+### name bl type 266 scope 0 id 4 cells 0
+
+### name bp type 267 scope 0 id 5 cells 0
+
+### name bpl type 268 scope 0 id 6 cells 0
+
+### name bx type 269 scope 0 id 7 cells 0
+
+### name ch type 271 scope 0 id 8 cells 0
+
+### name cl type 273 scope 0 id 9 cells 0
+
+### name cx type 274 scope 0 id 10 cells 0
+
+### name dh type 276 scope 0 id 11 cells 0
+
+### name di type 277 scope 0 id 12 cells 0
+
+### name dl type 278 scope 0 id 13 cells 0
+
+### name dx type 280 scope 0 id 14 cells 0
+
+### name eax type 281 scope 0 id 15 cells 0
+
+### name ebp type 282 scope 0 id 16 cells 0
+
+### name ebx type 283 scope 0 id 17 cells 0
+
+### name ecx type 284 scope 0 id 18 cells 0
+
+### name edi type 285 scope 0 id 19 cells 0
+
+### name edx type 286 scope 0 id 20 cells 0
+
+### name esi type 289 scope 0 id 21 cells 0
+
+### name esp type 290 scope 0 id 22 cells 0
+
+### name r10 type 309 scope 0 id 23 cells 0
+
+### name r10b type 310 scope 0 id 24 cells 0
+
+### name r10d type 311 scope 0 id 25 cells 0
+
+### name r10w type 312 scope 0 id 26 cells 0
+
+### name r11 type 313 scope 0 id 27 cells 0
+
+### name r11b type 314 scope 0 id 28 cells 0
+
+### name r11d type 315 scope 0 id 29 cells 0
+
+### name r11w type 316 scope 0 id 30 cells 0
+
+### name r12 type 317 scope 0 id 31 cells 0
+
+### name r12b type 318 scope 0 id 32 cells 0
+
+### name r12d type 319 scope 0 id 33 cells 0
+
+### name r12w type 320 scope 0 id 34 cells 0
+
+### name r13 type 321 scope 0 id 35 cells 0
+
+### name r13b type 322 scope 0 id 36 cells 0
+
+### name r13d type 323 scope 0 id 37 cells 0
+
+### name r13w type 324 scope 0 id 38 cells 0
+
+### name r14 type 325 scope 0 id 39 cells 0
+
+### name r14b type 326 scope 0 id 40 cells 0
+
+### name r14d type 327 scope 0 id 41 cells 0
+
+### name r14w type 328 scope 0 id 42 cells 0
+
+### name r15 type 329 scope 0 id 43 cells 0
+
+### name r15b type 330 scope 0 id 44 cells 0
+
+### name r15d type 331 scope 0 id 45 cells 0
+
+### name r15w type 332 scope 0 id 46 cells 0
+
+### name r8 type 333 scope 0 id 47 cells 0
+
+### name r8b type 334 scope 0 id 48 cells 0
+
+### name r8d type 335 scope 0 id 49 cells 0
+
+### name r8w type 336 scope 0 id 50 cells 0
+
+### name r9 type 337 scope 0 id 51 cells 0
+
+### name r9b type 338 scope 0 id 52 cells 0
+
+### name r9d type 339 scope 0 id 53 cells 0
+
+### name r9w type 340 scope 0 id 54 cells 0
+
+### name rax type 341 scope 0 id 55 cells 0
+
+### name rbp type 342 scope 0 id 56 cells 0
+
+### name rbx type 343 scope 0 id 57 cells 0
+
+### name rcx type 344 scope 0 id 58 cells 0
+
+### name rdi type 345 scope 0 id 59 cells 0
+
+### name rdx type 346 scope 0 id 60 cells 0
+
+### name rsi type 348 scope 0 id 61 cells 0
+
+### name rsp type 349 scope 0 id 62 cells 0
+
+### name si type 352 scope 0 id 63 cells 0
+
+### name sil type 353 scope 0 id 64 cells 0
+
+### name sp type 354 scope 0 id 65 cells 0
+
+### name main type 293 scope 0 id 66 cells 0
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ parameters 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ map @@@@@@@ 
+ah -> ### name ah type 261 scope 0 id 0 cells 0
+
+al -> ### name al type 262 scope 0 id 1 cells 0
+
+ax -> ### name ax type 264 scope 0 id 2 cells 0
+
+bh -> ### name bh type 265 scope 0 id 3 cells 0
+
+bl -> ### name bl type 266 scope 0 id 4 cells 0
+
+bp -> ### name bp type 267 scope 0 id 5 cells 0
+
+bpl -> ### name bpl type 268 scope 0 id 6 cells 0
+
+bx -> ### name bx type 269 scope 0 id 7 cells 0
+
+ch -> ### name ch type 271 scope 0 id 8 cells 0
+
+cl -> ### name cl type 273 scope 0 id 9 cells 0
+
+cx -> ### name cx type 274 scope 0 id 10 cells 0
+
+dh -> ### name dh type 276 scope 0 id 11 cells 0
+
+di -> ### name di type 277 scope 0 id 12 cells 0
+
+dl -> ### name dl type 278 scope 0 id 13 cells 0
+
+dx -> ### name dx type 280 scope 0 id 14 cells 0
+
+eax -> ### name eax type 281 scope 0 id 15 cells 0
+
+ebp -> ### name ebp type 282 scope 0 id 16 cells 0
+
+ebx -> ### name ebx type 283 scope 0 id 17 cells 0
+
+ecx -> ### name ecx type 284 scope 0 id 18 cells 0
+
+edi -> ### name edi type 285 scope 0 id 19 cells 0
+
+edx -> ### name edx type 286 scope 0 id 20 cells 0
+
+esi -> ### name esi type 289 scope 0 id 21 cells 0
+
+esp -> ### name esp type 290 scope 0 id 22 cells 0
+
+main -> ### name main type 293 scope 0 id 66 cells 0
+
+r10 -> ### name r10 type 309 scope 0 id 23 cells 0
+
+r10b -> ### name r10b type 310 scope 0 id 24 cells 0
+
+r10d -> ### name r10d type 311 scope 0 id 25 cells 0
+
+r10w -> ### name r10w type 312 scope 0 id 26 cells 0
+
+r11 -> ### name r11 type 313 scope 0 id 27 cells 0
+
+r11b -> ### name r11b type 314 scope 0 id 28 cells 0
+
+r11d -> ### name r11d type 315 scope 0 id 29 cells 0
+
+r11w -> ### name r11w type 316 scope 0 id 30 cells 0
+
+r12 -> ### name r12 type 317 scope 0 id 31 cells 0
+
+r12b -> ### name r12b type 318 scope 0 id 32 cells 0
+
+r12d -> ### name r12d type 319 scope 0 id 33 cells 0
+
+r12w -> ### name r12w type 320 scope 0 id 34 cells 0
+
+r13 -> ### name r13 type 321 scope 0 id 35 cells 0
+
+r13b -> ### name r13b type 322 scope 0 id 36 cells 0
+
+r13d -> ### name r13d type 323 scope 0 id 37 cells 0
+
+r13w -> ### name r13w type 324 scope 0 id 38 cells 0
+
+r14 -> ### name r14 type 325 scope 0 id 39 cells 0
+
+r14b -> ### name r14b type 326 scope 0 id 40 cells 0
+
+r14d -> ### name r14d type 327 scope 0 id 41 cells 0
+
+r14w -> ### name r14w type 328 scope 0 id 42 cells 0
+
+r15 -> ### name r15 type 329 scope 0 id 43 cells 0
+
+r15b -> ### name r15b type 330 scope 0 id 44 cells 0
+
+r15d -> ### name r15d type 331 scope 0 id 45 cells 0
+
+r15w -> ### name r15w type 332 scope 0 id 46 cells 0
+
+r8 -> ### name r8 type 333 scope 0 id 47 cells 0
+
+r8b -> ### name r8b type 334 scope 0 id 48 cells 0
+
+r8d -> ### name r8d type 335 scope 0 id 49 cells 0
+
+r8w -> ### name r8w type 336 scope 0 id 50 cells 0
+
+r9 -> ### name r9 type 337 scope 0 id 51 cells 0
+
+r9b -> ### name r9b type 338 scope 0 id 52 cells 0
+
+r9d -> ### name r9d type 339 scope 0 id 53 cells 0
+
+r9w -> ### name r9w type 340 scope 0 id 54 cells 0
+
+rax -> ### name rax type 341 scope 0 id 55 cells 0
+
+rbp -> ### name rbp type 342 scope 0 id 56 cells 0
+
+rbx -> ### name rbx type 343 scope 0 id 57 cells 0
+
+rcx -> ### name rcx type 344 scope 0 id 58 cells 0
+
+rdi -> ### name rdi type 345 scope 0 id 59 cells 0
+
+rdx -> ### name rdx type 346 scope 0 id 60 cells 0
+
+rsi -> ### name rsi type 348 scope 0 id 61 cells 0
+
+rsp -> ### name rsp type 349 scope 0 id 62 cells 0
+
+si -> ### name si type 352 scope 0 id 63 cells 0
+
+sil -> ### name sil type 353 scope 0 id 64 cells 0
+
+sp -> ### name sp type 354 scope 0 id 65 cells 0
+
+
+Scope 2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+### name main type 293 scope 1 id 1 cells 0 varNum 2
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ variables #####
+### name main type 302 scope 1 id 0 cells 0
+
+### name a type 270 scope 1 id 1 cells 1
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ parameters 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ map @@@@@@@ 
+a -> ### name a type 270 scope 1 id 1 cells 1
+
+main -> ### name main type 302 scope 1 id 0 cells 0
+
+
+Scope 2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+### name printText type 293 scope 2 id 2 cells 0 varNum 2
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ variables #####
+### name param1 type 306 scope 2 id 0 cells 0
+
+### name param2 type 306 scope 2 id 1 cells 0
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ parameters 
+### name param1 type 306 scope 2 id 0 cells 0
+
+### name param2 type 306 scope 2 id 1 cells 0
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ map @@@@@@@ 
+param1 -> ### name param1 type 306 scope 2 id 285114560 cells 0
+
+param2 -> ### name param2 type 306 scope 2 id 0 cells 0
+
+
+Scope 2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+### name processVars type 293 scope 3 id 3 cells 0 varNum 2
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ variables #####
+### name var1 type 306 scope 3 id 0 cells 0
+
+### name var2 type 306 scope 3 id 1 cells 0
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ parameters 
+### name var1 type 306 scope 3 id 0 cells 0
+
+### name var2 type 306 scope 3 id 1 cells 0
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ map @@@@@@@ 
+var1 -> ### name var1 type 306 scope 3 id 1856831648 cells 0
+
+var2 -> ### name var2 type 306 scope 3 id 0 cells 0
+
+

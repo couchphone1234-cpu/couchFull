@@ -1,0 +1,71 @@
+/*********************************************************************************
+*
+* File Name: /home/user/programs/cgUpgrade/noncode/scrap.cpp
+*
+* Date: January , 7 , 2025
+* Comments: 
+* Compiler/Assembler:
+* Modifications:
+*
+*
+*
+*
+*
+*
+*
+* Program Shell Generated At: 7:17:17p.m.
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*/
+/*
+label0
+push a
+push c
+call processValue
+* temp0 c processValue
++ temp1 a temp0
+mov d temp1
+push tempI0
+push d 
+call print 
+mov rax 0
+*/
+	//function prototype #####################
+	proto word processVars ( vars , vart );
+	proto word print ( vars , vart );
+
+func dword main ( ) 
+{
+	var byte a;
+	var word c;
+	var dword d;
+	var dword x;
+	var dword y;
+	var dword z;
+	var dword o;
+	var array [ 5 ];
+	
+
+	d = a [ 3 ] + ebx + processVars ( x , y ) + 1;
+	
+	struct mine
+	{
+		byte i;
+	};
+	
+	print ( "hello world " , d );
+
+	if ( a * z )
+	{
+		o = z + y;
+	}
+	else 
+	{
+		z = a + c;
+	}
+
+	while ( eax == 1 )
+	{
+		eax = ecx + 1;
+	}
+	
+	return 0;
+}
