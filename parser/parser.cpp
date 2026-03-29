@@ -546,11 +546,21 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 			indexValue = 1;
 		
 		//make a new symbol #################
-		if ( type > FIRST_NEW_TYPE )
-		{
+		if ( type >= FIRST_NEW_TYPE )
+		{;;;;;
 			symbol * baseStructSymbol = scopes [ scope ].getSymbolByName ( name , scope );//get the struct template
-			symbol * clone = scopes [ scope ].cloneSymbol ( baseStructSymbol );//clone the struct for the instance
-			scopes [ scope ].addSymbol ( clone );//add the instance to the scope
+			
+			//test if struct exists ##############
+			if ( baseStructSymbol )
+			{
+				symbol * clone = scopes [ scope ].cloneSymbol ( baseStructSymbol );//clone the struct for the instance
+				scopes [ scope ].addSymbol ( clone );//add the instance to the scope
+			}
+			//report error if the struct doesn't exist #####
+			else
+			{
+				REPORT_ERROR ( "Undefined Struct !" );
+			}
 		}
 		else 
 		{
@@ -693,6 +703,8 @@ bool basis ( int scope , symbol *& operand )
 			//struct member operator ############
 			else if ( tok.type == '.' )
 			{
+				int size = operand -> members.size ( );
+				
 				//get the next token ###################################
 				GET_TOKEN ( tok )//get after .
 				

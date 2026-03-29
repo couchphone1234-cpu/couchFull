@@ -41,7 +41,7 @@ func dword main ( )
 	var dword y;
 	var dword z;
 	var dword o;
-	var array [ 5 ];
+	
 	
 	struct mine
 	{

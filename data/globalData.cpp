@@ -34,10 +34,12 @@
 		e += to_string ( __LINE__ );\
 		e += " ";\
 		e += tok.lexeme;\
+		e += " ";\
+		e += __FUNCTION__;\
 		gerrors.push_back ( e );\
 	}
 	
-	#define MAKE_ERROR(e) ( ( buffer = e ) + " sl: "  + to_string ( __LINE__ ) + " : " + __FUNCTION__ )
+	#define MAKE_ERROR(e) ( ( buffer = e ) + " sl: "  + to_string ( __LINE__ ) + " : " + __PRETTY_FUNCTION__ )
 	
 	
 	//wrap a string in a string class #######
