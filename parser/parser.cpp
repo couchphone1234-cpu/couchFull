@@ -145,7 +145,7 @@ bool function (  )
 	GET_TOKEN ( tok )
 	
 	//get identifer symbol #################################
-	if ( expect ( ( tok.type == IDENTIFIER ) , "Expecting Function Name ( identifier ) " ) == true )
+	if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "Function Name ( identifier ) " ) ) == true )
 	{
 		//put a symbol for the function in the global scope ##################
 		functionSymbol = scopes [ 0 ].addVariable ( tok.lexeme , FUNCTION , scope , 0 , FUNCTION_CATEGORY );
@@ -171,7 +171,7 @@ bool function (  )
 	GET_TOKEN ( tok )
 	
 	//expect an operand ####################################
-	if ( expect ( ( tok.type == '(' ) , "Expecting '(' " ) == false )
+	if ( expect ( ( tok.type == '(' ) , MAKE_ERROR ( "'(' " ) ) == false )
 		return false;
 	
 	//get the next token ####################
@@ -188,7 +188,7 @@ bool function (  )
 		GET_TOKEN ( tok )
 		
 		//expect an operand ####################################
-		if ( expect ( ( tok.type == ',' or tok.type != ')' ) , "Expecting ',' or ')'" ) == false )
+		if ( expect ( ( tok.type == ',' or tok.type != ')' ) , MAKE_ERROR ( "Expecting ',' or ')'" ) ) == false )
 			return false;
 		
 		//end parameters #######################################
@@ -200,14 +200,14 @@ bool function (  )
 	}
 	
 	//expect ) for end of parameter list ####################################
-	if ( expect ( ( tok.type == ')' ) , "Expecting ')' for end of parameter list" ) == false )
+	if ( expect ( ( tok.type == ')' ) , MAKE_ERROR ( "')' for end of parameter list" ) ) == false )
 		return false;
 	
 	//get the next token ####################
 	GET_TOKEN ( tok )
 		
 	//expect { for end of parameter list ####################################
-	if ( expect ( ( tok.type == '{' ) , "Expecting '{' for start of statement list" ) == false )
+	if ( expect ( ( tok.type == '{' ) , MAKE_ERROR ( "'{' for start of statement list" ) ) == false )
 		return false;
 
 	//get the next token ####################
@@ -251,7 +251,7 @@ bool function (  )
 	}
 	
 	//expect } for end of parameter list ####################################
-	if ( expect ( ( tok.type == '}' ) , "Expecting '}' for start function of statement list" ) == false )
+	if ( expect ( ( tok.type == '}' ) , MAKE_ERROR ( "'}' for start function of statement list" ) ) == false )
 		return false;
 	
 	return true;
@@ -288,7 +288,7 @@ bool whileLoop ( int scope )
 	GET_TOKEN ( tok )
 	
 	//expect '(' ##########################################
-	if ( expect ( ( tok.type == '(' ) , "Expecting Open brace ( " ) == false )
+	if ( expect ( ( tok.type == '(' ) , MAKE_ERROR ( "Open brace ( " ) ) == false )
 		return false;
 	
 	//make test label ######################
@@ -304,13 +304,13 @@ bool whileLoop ( int scope )
 	jumpOut = makeInstruction (  JUMP_TEST_INST , dummy , expResult , 0 , scope );
 	
 	//expect ')' ##########################################
-	if ( expect ( ( tok.type == ')' ) , "Expecting Closed brace ) " ) == false )
+	if ( expect ( ( tok.type == ')' ) , MAKE_ERROR ( "Closed brace ) " ) ) == false )
 		return false;
 	
 	GET_TOKEN ( tok )
 
 	//expect '(' ##########################################
-	if ( expect ( ( tok.type == '{' ) , "Expecting Open brace { " ) == false )
+	if ( expect ( ( tok.type == '{' ) , MAKE_ERROR ( "Open brace { " ) ) == false )
 		return false;
 		
 	//get the loop statement list ##################
@@ -318,7 +318,7 @@ bool whileLoop ( int scope )
 		return false;	
 	
 	//expect '(' ##########################################
-	if ( expect ( ( tok.type == '}' ) , "Expecting Open brace } " ) == false )
+	if ( expect ( ( tok.type == '}' ) , MAKE_ERROR ( "Open brace } " ) ) == false )
 		return false;
 	
 	//jump to test ####################################
@@ -391,7 +391,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	GET_TOKEN ( tok );
 	
 	//expect '(' ##########################################
-	if ( expect ( ( tok.type == '(' ) , "Expecting Open brace ( " ) == false )
+	if ( expect ( ( tok.type == '(' ) , MAKE_ERROR ( "Open brace ( " ) ) == false )
 		return false;
 	
 	GET_TOKEN ( tok )
@@ -404,13 +404,13 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	jmpOut = makeInstruction ( JUMP_TEST_INST , dummy , expResult , 0 , scope , "if statement start" );
 
 	//expect '(' ##########################################
-	if ( expect ( ( tok.type == ')' ) , "Expecting Closed brace ) " ) == false )
+	if ( expect ( ( tok.type == ')' ) , MAKE_ERROR ( "Closed brace ) " ) ) == false )
 		return false;
 	
 	GET_TOKEN ( tok )
 
 	//expect '(' ##########################################
-	if ( expect ( ( tok.type == '{' ) , "Expecting Open brace { " ) == false )
+	if ( expect ( ( tok.type == '{' ) , MAKE_ERROR ( "Open brace { " ) ) == false )
 		return false;
 
 	GET_TOKEN ( tok )
@@ -422,7 +422,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	//GET_TOKEN ( tok )
 	
 	//expect '}' ##########################################
-	if ( expect ( ( tok.type == '}' ) , "Expecting Open brace } " ) == false )
+	if ( expect ( ( tok.type == '}' ) , MAKE_ERROR ( "Open brace } " ) ) == false )
 		return false;
 
 	if ( lc.peekToken ( tokPeek ) == false )
@@ -451,7 +451,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 				return false;	
 				
 			//expect '}' ##########################################
-			if ( expect ( ( tok.type == '}' ) , "Expecting Open brace } " ) == false )
+			if ( expect ( ( tok.type == '}' ) , MAKE_ERROR ( "Open brace } " ) ) == false )
 				return false;
 					
 			//end = makeLabel ( scope );// end of the if statement 
@@ -517,7 +517,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	while ( ! lc.eofFound  )
 	{
 		//expect '(' ##########################################
-		if ( expect ( ( tok.type == IDENTIFIER ) , "Expecting Variable Identifier" ) == false )
+		if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "Variable Identifier" ) ) == false )
 			return false;
 		
 		//save the token lexeme ###############################
@@ -533,13 +533,13 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 			GET_TOKEN ( tok )
 			
 			//expect int ##########################################
-			if ( expect ( ( tok.type == INT ) , "Expecting Int Index" ) == false )
+			if ( expect ( ( tok.type == INT ) , MAKE_ERROR ( "Int Index" ) ) == false )
 				return false;
 			
 			indexValue = stoi ( tok.lexeme );
 			
 			//expect ']' ##########################################
-			if ( expect ( ( tok.type == ']' ) , "Expecting Array Index Close ]" ) == false )
+			if ( expect ( ( tok.type == ']' ) , MAKE_ERROR ( "Array Index Close ]" ) ) == false )
 				return false;
 		}	
 		else 
@@ -562,7 +562,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 			break;
 		
 		//expect ',' ##########################################
-		if ( expect ( ( tok.type == ',' ) , "Expecting Name Divider , " ) == false )
+		if ( expect ( ( tok.type == ',' ) , MAKE_ERROR ( "Name Divider , " ) ) == false )
 			return false;	
 
 		//get the next token ##################################
@@ -681,7 +681,7 @@ bool basis ( int scope , symbol *& operand )
 					return false;
 				
 				//expect ']' ##########################################
-				if ( expect ( ( tok.type == ']' ) , "Unclosed array index: " + __LINE__ ) == false )
+				if ( expect ( ( tok.type == ']' ) , MAKE_ERROR ( "Unclosed array index: " ) ) == false )
 					return false;
 			
 				makeInstruction ( ARRAY_INDEX_INST , operand , expResult , 0 , scope , "array index instruction"); //make the array index
@@ -696,7 +696,7 @@ bool basis ( int scope , symbol *& operand )
 				//get the next token ###################################
 				GET_TOKEN ( tok )//get after .
 				
-				if ( expect ( ( tok.type == IDENTIFIER ) , "Expecting Variable Identifier" ) == false )
+				if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "Variable Identifier" ) ) == false )
 					return false;
 
 				//substitute varible for struct member here ##############
@@ -750,7 +750,7 @@ bool basis ( int scope , symbol *& operand )
 				makeInstruction ( CALL , operand , 0 , 0 , scope );
 				
 				//get the closing ')' #######################
-				if ( expect ( ( tok.type == ')' ) , "Expecting )" ) != true )
+				if ( expect ( ( tok.type == ')' ) , MAKE_ERROR ( " )" ) ) != true )
 					return false;
 				
 				GET_TOKEN ( tok )
@@ -1064,7 +1064,7 @@ bool prototype ( )
 	
 	//this part is wrong , should create new function 
 	//get identifer symbol #################################
-	if ( expect ( ( tok.type == IDENTIFIER ) , "Expecting Function Name ( identifier ) " ) != true )
+	if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "Function Name ( identifier ) " ) ) != true )
 	{
 		return false;
 	}
@@ -1097,7 +1097,7 @@ bool prototype ( )
 	GET_TOKEN ( tok )
 	
 	//expect an operand ####################################
-	if ( expect ( ( tok.type == '(' ) , "Expecting '(' " ) == false )
+	if ( expect ( ( tok.type == '(' ) , MAKE_ERROR ( "'(' " ) ) == false )
 		return false;
 	
 	//get the next token ####################
@@ -1114,7 +1114,7 @@ bool prototype ( )
 		GET_TOKEN ( tok )
 		
 		//expect an operand ####################################
-		if ( expect ( ( tok.type == ',' or tok.type != ')' ) , "Expecting ',' or ')'" ) == false )
+		if ( expect ( ( tok.type == ',' or tok.type != ')' ) , MAKE_ERROR ( "',' or ')'" ) ) == false )
 			return false;
 		
 		//end parameters #######################################
@@ -1126,14 +1126,14 @@ bool prototype ( )
 	}
 	
 	//expect ) for end of parameter list ####################################
-	if ( expect ( ( tok.type != ')' ) , "Expecting ')' for end of parameter list" ) == false )
+	if ( expect ( ( tok.type != ')' ) , MAKE_ERROR ( "')' for end of parameter list" ) ) == false )
 		return false;
 	
 	//get the next token ####################
 	GET_TOKEN ( tok )
 		
 	//expect { for end of parameter list ####################################
-	if ( expect ( ( tok.type != ';' ) , "Expecting ';' for end of prototype" ) == false )
+	if ( expect ( ( tok.type != ';' ) , MAKE_ERROR ( " ';' for end of prototype" ) ) == false )
 		return false;
 	
 	return true;
@@ -1207,7 +1207,7 @@ bool structDeclaration ( int scope )
 	GET_TOKEN ( tok )
 	
 	//expect '{' ##########################################
-	if ( expect ( ( tok.type == IDENTIFIER ) , "Expecting a struct name" ) == false )
+	if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "struct name" ) ) == false )
 		return false;
 		
 	//allocate the memory ############################
@@ -1217,7 +1217,7 @@ bool structDeclaration ( int scope )
     GET_TOKEN ( tok )
     
     //expect ']' ##########################################
-	if ( expect ( ( tok.type == '{' ) , "Expecting a { for struct" ) == false )
+	if ( expect ( ( tok.type == '{' ) , MAKE_ERROR ( "{ for struct" ) ) == false )
 			return false;
 			
 	GET_TOKEN ( tok )
@@ -1236,7 +1236,7 @@ bool structDeclaration ( int scope )
 		GET_TOKEN ( tok )
 
 		//expect '(' ##########################################
-		if ( expect ( ( tok.type == IDENTIFIER ) , "Expecting Variable Identifier" ) == false )
+		if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "Expecting Variable Identifier" ) ) == false )
 			return false;
 		
 		//save the token lexeme ###############################
@@ -1252,13 +1252,13 @@ bool structDeclaration ( int scope )
 			GET_TOKEN ( tok )
 			
 			//expect int ##########################################
-			if ( expect ( ( tok.type == INT ) , "Expecting Int Index" ) == false )
+			if ( expect ( ( tok.type == INT ) , MAKE_ERROR ( "Int Index" ) ) == false )
 				return false;
 			
 			indexValue = stoi ( tok.lexeme );
 			
 			//expect ']' ##########################################
-			if ( expect ( ( tok.type == ']' ) , "Expecting Array Index Close ]" ) == false )
+			if ( expect ( ( tok.type == ']' ) , MAKE_ERROR ( "Array Index Close ]" ) ) == false )
 				return false;
 		}	
 		else 
@@ -1271,7 +1271,7 @@ bool structDeclaration ( int scope )
 		s -> initialize ( name , type , scope , indexValue , BUILT_IN_CATEGORY );
 		newType -> members.push_back ( s );
 
-		if ( expect ( ( tok.type == ';' ) , "Expecting ;" ) == false )
+		if ( expect ( ( tok.type == ';' ) , MAKE_ERROR ( " ;" ) ) == false )
 			return false;
 
 		//get the next token ##################################
@@ -1285,7 +1285,7 @@ bool structDeclaration ( int scope )
 	scopes [ scope ].addSymbol ( newType );
 	
 	//check if the closing brace is there ###########
-	if ( expect ( ( tok.type == '}' ) , "Expecting }" ) == false )
+	if ( expect ( ( tok.type == '}' ) , MAKE_ERROR ( " }" ) ) == false )
 		return false;
 
 	return true;

@@ -21,6 +21,7 @@
 
 	lexerClass lc;
 	vector < map < string , int > > strMap;
+	string buffer;
 	
 	//the error handler #####################
 	vector < string > gerrors; 
@@ -29,9 +30,15 @@
 	{\
 		string e = error;\
 		e += " ";\
+		e += "sl: ";\
+		e += to_string ( __LINE__ );\
+		e += " ";\
 		e += tok.lexeme;\
 		gerrors.push_back ( e );\
 	}
+	
+	#define MAKE_ERROR(e) ( ( buffer = e ) + " sl: "  + to_string ( __LINE__ ) + " : " + __FUNCTION__ )
+	
 	
 	//wrap a string in a string class #######
 	string make_str ( string s )

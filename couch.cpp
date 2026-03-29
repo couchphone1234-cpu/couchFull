@@ -112,7 +112,7 @@ int main ( int argc , char * argv [ ] )
 	//dump symbol table ###############
 	//dumpSymbolTable ( );
 	#endif
-	cout << "here" << endl;
+	
 	dumpInstructions ( );
 	//dumpScopes ( );
 	dumpErrors ( );
