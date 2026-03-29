@@ -31,6 +31,7 @@
 			symbol * getTemp ( int type , int scope , int cells );
 			symbol * getSymbolByName ( string name , int scope );
 			symbol * addSymbol ( symbol * s );
+			symbol * cloneSymbol ( symbol * s );
 			//bool dumpScopes ( );
 
 		

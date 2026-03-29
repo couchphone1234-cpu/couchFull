@@ -115,6 +115,7 @@ int main ( int argc , char * argv [ ] )
 	cout << "here" << endl;
 	dumpInstructions ( );
 	//dumpScopes ( );
+	dumpErrors ( );
 	
 	return 0; 
 }

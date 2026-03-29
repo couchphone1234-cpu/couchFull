@@ -545,8 +545,18 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 		else 
 			indexValue = 1;
 		
-		//add the symbol to the table ############################
-		scopes [ scope ].addVariable ( name , type  , scope , indexValue , BUILT_IN_CATEGORY );
+		//make a new symbol #################
+		if ( type > FIRST_NEW_TYPE )
+		{
+			symbol * baseStructSymbol = scopes [ scope ].getSymbolByName ( name , scope );//get the struct template
+			symbol * clone = scopes [ scope ].cloneSymbol ( baseStructSymbol );//clone the struct for the instance
+			scopes [ scope ].addSymbol ( clone );//add the instance to the scope
+		}
+		else 
+		{
+			//add the symbol to the table ############################
+			scopes [ scope ].addVariable ( name , type  , scope , indexValue , BUILT_IN_CATEGORY );
+		}
 		
 		if ( tok.type == ';' )
 			break;
@@ -702,6 +712,7 @@ bool basis ( int scope , symbol *& operand )
 				{
 					//instruction selection operator #########################
 					makeInstruction ( STRUCT_SELECTION , operand , operand -> members [ memberIndex ] , 0 , scope ); //make the array index
+					operand = operand -> members [ memberIndex ];
 				}
 				
 				GET_TOKEN ( tok )//leave next token in stream

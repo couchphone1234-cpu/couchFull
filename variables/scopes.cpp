@@ -97,6 +97,9 @@ symbol * scope::addVariable ( string inputName , int inputType , int inputScope 
 	//initialize the new symbol ######################
 	s -> initialize ( inputName , inputType , inputScope , inputCells , BUILT_IN_CATEGORY );
 	
+	//set the variable identifiers here ############
+	s -> id = varNum ++;
+	
 	//enter the symbol in the scope ##################
 	variables.push_back ( s );
 	nameMap [ inputName ] = s;
@@ -139,6 +142,9 @@ symbol * scope::addParameter ( string inputName , int inputType , int inputScope
 	
 	//initialize the new symbol ######################
 	s -> initialize ( inputName , inputType , inputScope , inputCells , PARAMETER_CATEGORY );
+	
+	//set the variable identifiers here ############
+	s -> id = varNum ++;
 	
 	//enter the symbol in the scope ##################
 	parameters.push_back ( s );
@@ -231,6 +237,9 @@ symbol * scope::getTemp ( int type , int scope , int cells )
 	//initialize the new symbol ######################
 	s -> initialize ( name , type , scope , cells , BUILT_IN_CATEGORY );
 	
+	//set the variable identifiers here ############
+	s -> id = varNum ++;
+	
 	//enter the symbol in the scope ##################
 	variables.push_back ( s );
 	nameMap [ name ] = s;
@@ -288,9 +297,63 @@ symbol * scope::getSymbolByName ( string name , int scope )
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 symbol * scope::addSymbol ( symbol * s )
 {
+	//set the variable identifiers here ############
+	s -> id = varNum ++;
+	
 	//save the variable symbol ##########
 	variables.push_back ( s );
 	nameMap [ s -> lexeme ] = s;
 	
 	return s;
+}
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: cloneSymbol
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool
+*
+* Comments:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+symbol * scope::cloneSymbol ( symbol * s )
+{
+	symbol * newInstance = 0;
+	
+	//allocate the memory ############################
+	newInstance = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+	newInstance -> initialize ( tok.lexeme , STRUCT , scopeNumber , 0 , STRUCT_CATEGORY );
+	
+	int numberOfMembers = s -> members.size ( );
+	int numberOfMaps = s -> nameMap.size ( );
+	int i = 0;
+	
+	//copy all the members ######################
+	while ( i < numberOfMembers )
+	{
+		symbol * newMember = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+		
+		//initialize memeber 
+		newMember -> lexeme = s -> members [ i ] -> lexeme;
+		newMember -> type = s -> members [ i ] -> type;
+		newMember -> scope = scopeNumber;
+		newMember -> cells = s -> members [ i ] -> cells;
+		newMember -> category = s -> members [ i ] -> category;
+		
+		newMember -> id = varNum ++; //set symbol number
+		
+		//add symbol to the new instance #########
+		newInstance -> members.push_back ( newMember );
+		newInstance -> nameMap [ newMember -> lexeme ] = newMember;
+		
+		i ++;
+	}
+
+	return newInstance;
 }
