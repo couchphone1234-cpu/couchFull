@@ -556,6 +556,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 			if ( baseStructSymbol )
 			{
 				symbol * clone = scopes [ scope ].cloneSymbol ( baseStructSymbol );//clone the struct for the instance
+				clone -> lexeme = name;
 				scopes [ scope ].addSymbol ( clone );//add the instance to the scope
 			}
 			//report error if the struct doesn't exist #####
@@ -638,6 +639,7 @@ bool basis ( int scope , symbol *& operand )
 		if ( operand == 0 )
 		{
 			REPORT_ERROR ( "Symbol not defined ")//report an error 
+			return false;
 		}
 	}
 	// immediate value #####################################
@@ -1058,6 +1060,7 @@ bool prototype ( )
 	int scope = 0;
 	symbol * result;
 	symbol parameter;
+	
 	symbol * functionName;
 	int functionID;
 	symbol * functionSymbol = 0;
@@ -1128,7 +1131,7 @@ bool prototype ( )
 		GET_TOKEN ( tok )
 		
 		//expect an operand ####################################
-		if ( expect ( ( tok.type == ',' or tok.type != ')' ) , MAKE_ERROR ( "',' or ')'" ) ) == false )
+		if ( expect ( ( tok.type == ',' or tok.type == ')' ) , MAKE_ERROR ( "',' or ')'" ) ) == false )
 			return false;
 		
 		//end parameters #######################################
@@ -1140,14 +1143,14 @@ bool prototype ( )
 	}
 	
 	//expect ) for end of parameter list ####################################
-	if ( expect ( ( tok.type != ')' ) , MAKE_ERROR ( "')' for end of parameter list" ) ) == false )
+	if ( expect ( ( tok.type == ')' ) , MAKE_ERROR ( "')' for end of parameter list" ) ) == false )
 		return false;
 	
 	//get the next token ####################
 	GET_TOKEN ( tok )
 		
 	//expect { for end of parameter list ####################################
-	if ( expect ( ( tok.type != ';' ) , MAKE_ERROR ( " ';' for end of prototype" ) ) == false )
+	if ( expect ( ( tok.type == ';' ) , MAKE_ERROR ( " ';' for end of prototype" ) ) == false )
 		return false;
 	
 	return true;
