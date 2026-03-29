@@ -491,6 +491,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	int indexValue;
 	string name;
 	int type;
+	string userDefinedType;
 	
 	//get the return type token ####################
 	GET_TOKEN ( tok )
@@ -503,6 +504,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	if ( tok.type == IDENTIFIER )
 	{
 		type = typeMap [ tok.lexeme ];
+		userDefinedType = tok.lexeme;
 	}
 	else
 	{
@@ -547,8 +549,8 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 		
 		//make a new symbol #################
 		if ( type >= FIRST_NEW_TYPE )
-		{;;;;;
-			symbol * baseStructSymbol = scopes [ scope ].getSymbolByName ( name , scope );//get the struct template
+		{
+			symbol * baseStructSymbol = scopes [ scope ].getSymbolByName ( userDefinedType , scope );//get the struct template
 			
 			//test if struct exists ##############
 			if ( baseStructSymbol )
