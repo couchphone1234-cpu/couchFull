@@ -52,5 +52,5 @@ func dword main ( )
 	
 	o = m.i;
 
-	return 0;
+	
 }

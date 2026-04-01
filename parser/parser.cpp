@@ -639,7 +639,7 @@ bool basis ( int scope , symbol *& operand )
 		if ( operand == 0 )
 		{
 			REPORT_ERROR ( "Symbol not defined ")//report an error 
-			return false;
+			return false;//should maybe put dummy symbol here 
 		}
 	}
 	// immediate value #####################################
@@ -769,6 +769,18 @@ bool basis ( int scope , symbol *& operand )
 				if ( expect ( ( tok.type == ')' ) , MAKE_ERROR ( " )" ) ) != true )
 					return false;
 				
+				GET_TOKEN ( tok )
+			}
+			//add post increment operator ##############
+			else if ( tok.type == INCREMENT )
+			{
+				addDelayedInstruction ( POST_INC_INST , operand ,operand , 0 , scope );
+				GET_TOKEN ( tok )
+			}
+			//add post decrement operator ##############
+			else if ( tok.type == DECREMENT )
+			{
+				addDelayedInstruction ( POST_INC_INST , operand ,operand , 0 , scope );
 				GET_TOKEN ( tok )
 			}
 		}
@@ -1305,5 +1317,32 @@ bool structDeclaration ( int scope )
 	if ( expect ( ( tok.type == '}' ) , MAKE_ERROR ( " }" ) ) == false )
 		return false;
 
+	return true;
+}
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: jumpStatements
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool
+*
+* Comments: for return statements , continue , break
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+bool returnStatement ( int scope ) 
+{
+	//get struct token ####################
+	GET_TOKEN ( tok )
+	
+	//expect '{' ##########################################
+	if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "struct name" ) ) == false )
+		return false;
+	
 	return true;
 }

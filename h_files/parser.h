@@ -63,6 +63,15 @@
 		return false;\
 	}
 	
+	//function call struct ##############
+	struct functionCall
+	{
+		instruction * returnLabel;//return label node
+	};
+	
+	//call stack ########################
+	vector < functionCall > callStack;
+	
 
 //##################################################################################
 
@@ -83,6 +92,7 @@
 	bool prototype (  );
 	bool ifStatementDriver ( int scope );
 	bool structDeclaration ( int scope );
+	bool returnStatement ( int scope );
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

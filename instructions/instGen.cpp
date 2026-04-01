@@ -104,7 +104,7 @@
 	inline int addDelayedInstructions ( );
 	int dumpInstructions ( );
 	instruction * addInstruction ( symbol * equ , symbol * lhs , symbol * rhs , int  scope , int type );
-	instruction * addDelayedInstruction ( symbol * equ , symbol * lhs , symbol * rhs , int  scope , int type );
+	instruction * addDelayedInstruction ( int type , symbol * equ , symbol * lhs , symbol * rhs , int  scope , string notes = "" );
 
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -208,7 +208,7 @@ instruction * makeDelayedInstruction (  int type , symbol * equ , symbol * lhs ,
 	instruction * ins;
 	
 	//make the delayed instruction ######################
-	ins = addDelayedInstruction ( equ , lhs , rhs , scope , type );
+	ins = addDelayedInstruction ( type , equ , lhs , rhs , scope );
 	
 	return ins;
 }
@@ -492,7 +492,7 @@ instruction * addInstruction ( symbol * equ , symbol * lhs , symbol * rhs , int 
 *
 * Comments:
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-instruction * addDelayedInstruction ( symbol * equ , symbol * lhs , symbol * rhs , int  scope , int type )
+instruction * addDelayedInstruction ( int type , symbol * equ , symbol * lhs , symbol * rhs , int scope , string notes )
 {
 	instruction * ins;
 	
@@ -505,6 +505,9 @@ instruction * addDelayedInstruction ( symbol * equ , symbol * lhs , symbol * rhs
 	
 	//initialize the instruction #####################
 	ins -> initialize ( equ , lhs , rhs , scope , type );
+	
+	if ( notes.size ( ) > 0 )
+		ins -> notes = notes;
 	
 	//add the instruction the list ###################
 	delayedIns.push ( ins );
