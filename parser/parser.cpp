@@ -1340,6 +1340,16 @@ bool returnStatement ( int scope )
 	//get struct token ####################
 	GET_TOKEN ( tok )
 	
+	if ( tok.type == ';' )
+	{
+		makeInstruction ( RETURN_STATEMENT , 0 , 0 , 0, scope );
+	}
+	else if ( tok.type == '-' or tok.type == '+' or tok.type == INCREMENT or tok.type == DECREMENT or tok.type == IDENTIFIER or isRegister ( tok.type ) ) 
+	{
+	
+	}
+	
+	
 	//expect '{' ##########################################
 	if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "struct name" ) ) == false )
 		return false;

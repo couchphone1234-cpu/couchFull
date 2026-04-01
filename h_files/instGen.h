@@ -37,6 +37,7 @@
 	const int POST_INC_INST = 12;
 	const int PRE_DEC_INST = 13;
 	const int POST_DEC_INST = 14;
+	const int RETURN_STATEMENT = 15;
 	
 	//string instructions [ 11 ] = { "label" , "jump" , "jump_test" , "negate" , "inc" , "dec" ,
 	//								"array_eval" , "push" , "call" , "struct_select" , "move" };
