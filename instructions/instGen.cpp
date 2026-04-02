@@ -105,7 +105,9 @@
 	int dumpInstructions ( );
 	instruction * addInstruction ( symbol * equ , symbol * lhs , symbol * rhs , int  scope , int type );
 	instruction * addDelayedInstruction ( int type , symbol * equ , symbol * lhs , symbol * rhs , int  scope , string notes = "" );
-
+	instruction * makeLabelDontInsert ( int scope , string notes = "" ); 
+	instruction * addInstructionNoInsert ( symbol * equ , symbol * lhs , symbol * rhs , int  scope , int type );
+	bool addInstructionToList ( instruction * i );
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -516,4 +518,106 @@ instruction * addDelayedInstruction ( int type , symbol * equ , symbol * lhs , s
 	delayedIns.push ( ins );
 
 	return ins;
+}
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: makeLabelDontInsert
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool
+*
+* Comments: Label format: equ = label, rhs and lhs = 0 , type = label
+	//initialise the symbol
+	
+	ins.equ = symbol * label;
+	ins.lhs = 0;
+	ins.rhs = 0;
+	ins.type = LABEL_INST;
+	ins.scopeNum = scope;
+	
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+instruction * makeLabelDontInsert ( int scope , string notes ) 
+{ 
+	//complete any delayed instructions first ###########
+	addDelayedInstructions ( );
+	instruction * ins;
+	symbol * label;
+	string name = "label" + to_string ( labelNum ++ );
+	
+	//make a label symbol in the scope ###################
+	label = scopes [ scope ].addVariable( name , LABEL , scope , 0 , LABEL_CATEGORY );
+	
+	ins = addInstructionNoInsert ( label , 0 , 0 , scope , LABEL_INST );
+	
+	if ( notes.size ( ) > 0 )
+		ins -> notes = notes;
+
+	return ins;//insNum;
+}
+
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: instruction
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool makeDelayed
+*
+* Comments:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+instruction * addInstructionNoInsert ( symbol * equ , symbol * lhs , symbol * rhs , int  scope , int type )
+{
+	instruction * ins;
+	
+	//allocate the memory ############################
+	ins = ( instruction * ) dai.allocate ( sizeof ( instruction ) );
+	
+	//check the allocation ###########################
+	if ( ins == 0 )
+		return 0;
+	
+	//initialize the instruction #####################
+	ins -> initialize ( equ , lhs , rhs , scope , type );
+	
+	//add the instruction the list ###################
+	//instVec.push_back ( ins );
+
+	return ins;
+}
+
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: instruction
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool makeDelayed
+*
+* Comments:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+bool addInstructionToList ( instruction * i )
+{
+	//add the instruction the list ###################
+	instVec.push_back ( i );
+	
+	return true;
 }

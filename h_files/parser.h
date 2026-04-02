@@ -93,6 +93,9 @@
 	bool ifStatementDriver ( int scope );
 	bool structDeclaration ( int scope );
 	bool returnStatement ( int scope );
+	bool loopStatementList ( int scope , instruction * testLabel );
+	bool continueStatement ( int scope , instruction * testLabel );
+	
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

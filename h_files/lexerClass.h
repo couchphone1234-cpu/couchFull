@@ -221,6 +221,8 @@
 	const int VAR = 360;
 	const int WHILE = 361;
 	const int RETURN = 362;
+	const int CONTINUE = 363;
+	const int BREAK = 364;
 
 
 	
@@ -402,6 +404,8 @@ bool setKeywords ( )
 	keywords [ "while" ] = WHILE;
 	keywords [ "word" ] = WORD;
 	keywords [ "return" ] = RETURN;
+	keywords [ "continue" ] = CONTINUE;
+	keywords [ "break"] = BREAK;
 	
 	IDToKeywords [ AH ] = "ah";
 	IDToKeywords [ AL ] = "al";
@@ -499,6 +503,8 @@ bool setKeywords ( )
 	IDToKeywords [ WHILE ] = "while";
 	IDToKeywords [ WORD ] = "word";
 	IDToKeywords [ RETURN ] = "return";
+	IDToKeywords [ CONTINUE ] = "continue";
+	IDToKeywords [ BREAK ] = "break";
 	
 	return true;
 }

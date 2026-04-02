@@ -40,6 +40,8 @@
 	#ifndef stdlib_h
 	#include <stdlib.h>
 	#endif
+	
+	bool continueStatement ( int scope , instruction * testLabel );
 
 	using namespace std;
 
@@ -297,6 +299,7 @@ bool whileLoop ( int scope )
 	
 	//make test label ######################
 	loopTest = makeLabel ( scope , "while loop start" );
+	endOfLoop = makeLabelDontInsert ( scope );
 	
 	GET_TOKEN ( tok )
 	
@@ -318,7 +321,7 @@ bool whileLoop ( int scope )
 		return false;
 		
 	//get the loop statement list ##################
-	if ( statementList ( scope ) == false )
+	if ( loopStatementList ( scope , loopTest ) == false )
 		return false;	
 	
 	//expect '(' ##########################################
@@ -328,8 +331,7 @@ bool whileLoop ( int scope )
 	//jump to test ####################################
 	jumpToTest = makeInstruction (  JUMP_INST , loopTest -> equ , 0 , 0 , scope );
 	
-	//make out label ###########################################################
-	endOfLoop = makeLabel ( scope ); 
+ 
 	
 	//backpatch jump out instruction ###########################################
 	jumpOut -> equ = endOfLoop -> equ;
@@ -1365,5 +1367,99 @@ bool returnStatement ( int scope )
 		}
 	}
 	
+	return true;
+}
+
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: parse
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool
+*
+* Comments:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+bool loopStatementList ( int scope , instruction * testLabel )
+{ 
+	symbol * result;
+	
+	//get the function statement list #########
+	while ( ! lc.eofFound and tok.type != '}' )
+	{
+		//while loop #############
+		if ( tok.type == WHILE )
+		{
+			whileLoop ( scope );
+		}
+		//if statement $$$$$$$$$$$$
+		else if ( tok.type == IF )
+		{
+			ifStatementDriver ( scope );
+
+		}
+		//identifier ##############
+		else if ( tok.type == IDENTIFIER or isRegister ( tok.type ) )
+		{
+			expression ( scope , result );
+		}
+		
+		//declaration #############
+		else if ( tok.type == VAR )
+		{
+			variableDec ( scope );
+		}
+		else if ( tok.type == STRUCT )
+		{
+			structDeclaration ( scope );
+		}
+		else if ( tok.type == RETURN )
+		{
+			returnStatement ( scope );
+		}
+		else if ( tok.type == CONTINUE )
+		{
+			continueStatement ( scope , testLabel );
+		}
+		//get the next token ######################
+		GET_TOKEN ( tok )
+	}
+	
+	return true;
+}
+
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: continueStatement
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool
+*
+* Comments:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+bool continueStatement ( int scope , instruction * testLabel )
+{ 
+	//get struct token ####################
+	GET_TOKEN ( tok )
+	
+	//if this is an empty return ############
+	if ( tok.type == ';' )
+	{
+		makeInstruction ( CONTINUE , 0 , 0 , 0, scope );//make empty return statement
+	}
+
 	return true;
 }

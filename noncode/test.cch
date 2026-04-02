@@ -52,5 +52,11 @@ func dword main ( )
 	
 	o = m.i;
 
+	
+	while ( a + c > 0 )
+	{
+		a --;
+	}
+	
 	return;
 }
