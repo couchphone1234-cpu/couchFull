@@ -233,7 +233,7 @@ bool function (  )
 
 		}
 		//possible expression ##############
-		else if ( tok.type == '@' or tok.type == '+' or tok.type == '-' or tok.type == IDENTIFIER )
+		else if ( isExpressionStart ( tok.type ) )
 		{
 			expression ( scope , result );
 		}
@@ -252,6 +252,7 @@ bool function (  )
 		{
 			returnStatement ( scope );
 		}
+
 		//get the next token ######################
 		GET_TOKEN ( tok )
 	}
@@ -877,7 +878,7 @@ bool statementList ( int scope )
 
 		}
 		//identifier ##############
-		else if ( tok.type == IDENTIFIER or isRegister ( tok.type ) )
+		else if ( isExpressionStart ( tok.type ) )
 		{
 			expression ( scope , result );
 		}
@@ -1332,7 +1333,7 @@ bool structDeclaration ( int scope )
 }
 /*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 *
-* Function Name: jumpStatements
+* Function Name: returnStatements
 *
 * Parameters:  
 *
@@ -1359,7 +1360,7 @@ bool returnStatement ( int scope )
 		makeInstruction ( RETURN_STATEMENT , 0 , 0 , 0, scope );//make empty return statement
 	}
 	//if this returns an expression #################################
-	else if ( tok.type == '-' or tok.type == '+' or tok.type == INCREMENT or tok.type == DECREMENT or tok.type == IDENTIFIER or isRegister ( tok.type ) ) 
+	else if ( isExpressionStart ( tok.type ) ) 
 	{
 		//if the expression parses correctly #########################
 		if ( expression ( scope , result ) == true )
@@ -1406,7 +1407,7 @@ bool loopStatementList ( int scope , instruction * testLabel )
 
 		}
 		//identifier ##############
-		else if ( tok.type == IDENTIFIER or isRegister ( tok.type ) )
+		else if ( isExpressionStart ( tok.type ) )
 		{
 			expression ( scope , result );
 		}
@@ -1462,5 +1463,28 @@ bool continueStatement ( int scope , instruction * testLabel )
 		makeInstruction ( CONTINUE , 0 , 0 , 0, scope );//make empty return statement
 	}
 
+	return true;
+}
+/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+*
+* Function Name: breakStatement
+*
+* Parameters:  
+*
+* Modifications: 
+*
+*
+*
+*
+*
+* Returns: bool
+*
+* Comments:
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+bool brakeStatement ( int scope , instruction * endLoopLabel )
+{ 
+
+	
+	
 	return true;
 }
