@@ -220,6 +220,7 @@
 	const int STRUCT = 359;
 	const int VAR = 360;
 	const int WHILE = 361;
+	const int RETURN = 362;
 
 
 	
@@ -400,6 +401,7 @@ bool setKeywords ( )
 	keywords [ "var" ] = VAR;
 	keywords [ "while" ] = WHILE;
 	keywords [ "word" ] = WORD;
+	keywords [ "return" ] = RETURN;
 	
 	IDToKeywords [ AH ] = "ah";
 	IDToKeywords [ AL ] = "al";
@@ -496,7 +498,7 @@ bool setKeywords ( )
 	IDToKeywords [ VAR ] = "var";
 	IDToKeywords [ WHILE ] = "while";
 	IDToKeywords [ WORD ] = "word";
-
+	IDToKeywords [ RETURN ] = "return";
 	
 	return true;
 }

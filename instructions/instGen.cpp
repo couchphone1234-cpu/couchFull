@@ -344,7 +344,10 @@ int dumpInstructions ( )
 			if ( instVec [ i ] -> lhs != 0  )	
 				cout << instVec [ i ] -> lhs -> lexeme;
 		}
-		
+		else if ( instVec [ i ] -> type == RETURN_STATEMENT )
+		{
+			cout << "ret";
+		}
 		//output the notes @@@@@@@@@@@@@@@@@@@@@
 		if ( instVec [ i ] -> notes.size ( ) > 0 )
 			cout << " //" << instVec [ i ] -> notes;

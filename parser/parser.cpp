@@ -246,6 +246,10 @@ bool function (  )
 		{
 			variableDec ( scope );
 		}
+		else if ( tok.type == RETURN )
+		{
+			returnStatement ( scope );
+		}
 		//get the next token ######################
 		GET_TOKEN ( tok )
 	}
@@ -884,6 +888,10 @@ bool statementList ( int scope )
 		{
 			structDeclaration ( scope );
 		}
+		else if ( tok.type == RETURN )
+		{
+			returnStatement ( scope );
+		}
 		//get the next token ######################
 		GET_TOKEN ( tok )
 	}
@@ -1337,22 +1345,25 @@ bool structDeclaration ( int scope )
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 bool returnStatement ( int scope ) 
 {
+	symbol * result;
+	
 	//get struct token ####################
 	GET_TOKEN ( tok )
 	
+	//if this is an empty return ############
 	if ( tok.type == ';' )
 	{
-		makeInstruction ( RETURN_STATEMENT , 0 , 0 , 0, scope );
+		makeInstruction ( RETURN_STATEMENT , 0 , 0 , 0, scope );//make empty return statement
 	}
+	//if this returns an expression #################################
 	else if ( tok.type == '-' or tok.type == '+' or tok.type == INCREMENT or tok.type == DECREMENT or tok.type == IDENTIFIER or isRegister ( tok.type ) ) 
 	{
-	
+		//if the expression parses correctly #########################
+		if ( expression ( scope , result ) == true )
+		{
+			makeInstruction ( RETURN_STATEMENT , result , 0 , 0, scope ); //make the return value function 
+		}
 	}
-	
-	
-	//expect '{' ##########################################
-	if ( expect ( ( tok.type == IDENTIFIER ) , MAKE_ERROR ( "struct name" ) ) == false )
-		return false;
 	
 	return true;
 }
