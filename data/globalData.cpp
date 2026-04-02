@@ -65,6 +65,7 @@
 	
 	#define isOperator(o) ( o == '>' or o == '<' or o == '+' or o == '-' or o == '*' or o == '\\' or o == AND or o == '=' or o == LOGICAL_EQ or o == GREAT_EQ or o == LESS_EQ or o == NOT_EQ or o == GREATER_THAN or o == LESS_EQ )
 	#define isRegister(r) ( r > 260 and r < 327 ) 
+	#define isExpressionStart(e) ( e == INCREMENT or e == DECREMENT or e == '@' or e == '+' or e == '-' or e == IDENTIFIER or isRegister ( e ) )
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 *

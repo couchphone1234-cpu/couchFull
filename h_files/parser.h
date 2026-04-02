@@ -95,6 +95,7 @@
 	bool returnStatement ( int scope );
 	bool loopStatementList ( int scope , instruction * testLabel );
 	bool continueStatement ( int scope , instruction * testLabel );
+	bool brakeStatement ( int scope , instruction * endLoopLabel );
 	
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
