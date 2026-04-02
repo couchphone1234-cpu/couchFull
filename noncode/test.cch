@@ -53,7 +53,7 @@ func dword main ( )
 	o = m.i;
 
 	
-	while ( a + c > 0 )
+	while ( a + c < 0 )
 	{
 		a --;
 	}

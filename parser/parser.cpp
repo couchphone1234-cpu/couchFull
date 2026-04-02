@@ -331,10 +331,11 @@ bool whileLoop ( int scope )
 	//jump to test ####################################
 	jumpToTest = makeInstruction (  JUMP_INST , loopTest -> equ , 0 , 0 , scope );
 	
- 
+	addInstructionToList ( endOfLoop );
 	
 	//backpatch jump out instruction ###########################################
 	jumpOut -> equ = endOfLoop -> equ;
+	jumpOut = endOfLoop;
 	
 	return true;
 }
@@ -944,8 +945,8 @@ bool expression ( int scope , symbol *& operand )
 	
 	//while not at the end of the expression @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	while ( tok.type == '+' or tok.type == '-' or tok.type == '*' or tok.type == '\\' or tok.type == AND or tok.type == '=' or
-			  tok.type == LOGICAL_EQ or tok.type == GREAT_EQ or tok.type == LESS_EQ or tok.type == NOT_EQ
-			  or tok.type == GREATER_THAN or tok.type == LESS_EQ )
+			  tok.type == LOGICAL_EQ or tok.type == GREAT_EQ or tok.type == LESS_EQ or tok.type == NOT_EQ or
+			  tok.type == '>' or tok.type == '<' )
 	{	//get the operator #######################
 		op = tok.type;
 		GET_TOKEN ( tok )
