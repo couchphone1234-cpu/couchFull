@@ -112,7 +112,7 @@ int main ( int argc , char * argv [ ] )
 	//dump symbol table ###############
 	//dumpSymbolTable ( );
 	#endif
-	
+	addDelayedInstructions ( );
 	dumpInstructions ( );
 	//dumpScopes ( );
 	dumpErrors ( );

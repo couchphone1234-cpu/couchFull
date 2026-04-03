@@ -350,6 +350,20 @@ int dumpInstructions ( )
 		{
 			cout << "ret";
 		}
+		else if ( instVec [ i ] -> type == POST_INC_INST )
+		{
+			if ( instVec [ i ] -> equ  != 0  )
+				cout << "++ " << instVec [ i ] -> equ -> lexeme << " ";
+		}
+		else if ( instVec [ i ] -> type == POST_DEC_INST )
+		{
+			if ( instVec [ i ] -> equ  != 0  )
+				cout << "-- " << instVec [ i ] -> equ -> lexeme << " ";
+		}
+		else
+		{
+			cout << "unknown" << instVec [ i ] -> type;
+		}
 		//output the notes @@@@@@@@@@@@@@@@@@@@@
 		if ( instVec [ i ] -> notes.size ( ) > 0 )
 			cout << " //" << instVec [ i ] -> notes;

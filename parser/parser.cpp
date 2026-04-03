@@ -788,7 +788,7 @@ bool basis ( int scope , symbol *& operand )
 			//add post decrement operator ##############
 			else if ( tok.type == DECREMENT )
 			{
-				addDelayedInstruction ( POST_INC_INST , operand ,operand , 0 , scope );
+				addDelayedInstruction ( POST_DEC_INST , operand ,operand , 0 , scope );
 				GET_TOKEN ( tok )
 			}
 		}
