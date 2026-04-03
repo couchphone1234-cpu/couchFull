@@ -322,7 +322,7 @@ bool whileLoop ( int scope )
 		return false;
 		
 	//get the loop statement list ##################
-	if ( loopStatementList ( scope , loopTest ) == false )
+	if ( loopStatementList ( scope , loopTest , endOfLoop ) == false )
 		return false;	
 	
 	//expect '(' ##########################################
@@ -1388,7 +1388,7 @@ bool returnStatement ( int scope )
 *
 * Comments:
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-bool loopStatementList ( int scope , instruction * testLabel )
+bool loopStatementList ( int scope , instruction * testLabel , instruction * endLabel )
 { 
 	symbol * result;
 	
@@ -1429,6 +1429,11 @@ bool loopStatementList ( int scope , instruction * testLabel )
 		{
 			continueStatement ( scope , testLabel );
 		}
+		else if ( tok.type == BREAK )
+		{
+			brakeStatement ( scope , testLabel );
+		}
+		
 		//get the next token ######################
 		GET_TOKEN ( tok )
 	}
@@ -1460,7 +1465,7 @@ bool continueStatement ( int scope , instruction * testLabel )
 	//if this is an empty return ############
 	if ( tok.type == ';' )
 	{
-		makeInstruction ( CONTINUE , 0 , 0 , 0, scope );//make empty return statement
+		makeInstruction ( CONTINUE , testLabel -> equ , 0 , 0 , scope );//make empty return statement
 	}
 
 	return true;
@@ -1483,8 +1488,14 @@ bool continueStatement ( int scope , instruction * testLabel )
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 bool brakeStatement ( int scope , instruction * endLoopLabel )
 { 
+	//get struct token ####################
+	GET_TOKEN ( tok )
+	
+	//if this is an empty return ############
+	if ( tok.type == ';' )
+	{
+		makeInstruction ( CONTINUE , endLoopLabel -> equ , 0 , 0 , scope );//make empty return statement
+	}
 
-	
-	
 	return true;
 }
