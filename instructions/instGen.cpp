@@ -353,12 +353,12 @@ int dumpInstructions ( )
 		else if ( instVec [ i ] -> type == POST_INC_INST )
 		{
 			if ( instVec [ i ] -> equ  != 0  )
-				cout << "++ " << instVec [ i ] -> equ -> lexeme << " ";
+				cout << instVec [ i ] -> equ -> lexeme << "++" << " ";
 		}
 		else if ( instVec [ i ] -> type == POST_DEC_INST )
 		{
 			if ( instVec [ i ] -> equ  != 0  )
-				cout << "-- " << instVec [ i ] -> equ -> lexeme << " ";
+				cout << instVec [ i ] -> equ -> lexeme << "--" << " ";
 		}
 		else
 		{

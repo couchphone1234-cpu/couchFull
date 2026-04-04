@@ -41,7 +41,7 @@
 	#include <stdlib.h>
 	#endif
 	
-	bool continueStatement ( int scope , instruction * testLabel );
+	//bool continueStatement ( int scope , instruction * testLabel );
 
 	using namespace std;
 
@@ -686,12 +686,12 @@ bool basis ( int scope , symbol *& operand )
 	PEEK_TOKEN ( peek_token )
 		
 	//see if there's a postfix operator ####################
-	if ( peek_token.type == '[' or peek_token.type == '.' or peek_token.type == '(' )
+	if ( peek_token.type == '[' or peek_token.type == '.' or peek_token.type == '(' or peek_token.type == INCREMENT or peek_token.type == DECREMENT )
 	{
 		GET_TOKEN ( tok )
 		
 		//get the postfix ops ##################################
-		while ( tok.type == '[' or tok.type == '.' or tok.type == '(' )
+		while ( tok.type == '[' or tok.type == '.' or tok.type == '(' or tok.type == INCREMENT or tok.type == DECREMENT )
 		{
 			//array index ########################
 			if ( tok.type == '[' )
