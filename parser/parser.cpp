@@ -660,7 +660,7 @@ bool basis ( int scope , symbol *& operand )
 	//######################################################
 	//evaluate the prefix operators #
 	//######################################################
-	
+	/*
 	//while we still have prefix ops ##############
 	while ( not prefixOps.empty ( ) )
 	{
@@ -680,7 +680,7 @@ bool basis ( int scope , symbol *& operand )
 		//post operator operator ###############
 		else if ( opCode == DECREMENT )
 			makeInstruction (  PRE_DEC_INST , operand , operand , 0 , scope );
-	}
+	}*/
 	
 	//get the next token ###################################
 	PEEK_TOKEN ( peek_token )
@@ -796,6 +796,27 @@ bool basis ( int scope , symbol *& operand )
 	else 
 	{
 		GET_TOKEN ( tok )
+	}
+	
+	//while we still have prefix ops ##############
+	while ( not prefixOps.empty ( ) )
+	{
+		opCode = prefixOps.back ( );
+		prefixOps.pop_back ( );
+		//do the negation instruction ##############
+		if ( opCode == '-' )
+		{
+			symbol * s = scopes [ scope ].getTemp ( operand -> type , scope , 0 );
+			makeInstruction ( MOVE , s , operand , 0 , scope , "make temp for negation" );
+			makeInstruction ( NEG_INST , s , s , 0 , scope );	
+			operand = s;
+		}
+		//pre increment operator ###############
+		else if ( opCode == INCREMENT )
+			makeInstruction (  PRE_INC_INST , operand ,operand , 0 , scope );
+		//post operator operator ###############
+		else if ( opCode == DECREMENT )
+			makeInstruction (  PRE_DEC_INST , operand , operand , 0 , scope );
 	}
 
 	return true;

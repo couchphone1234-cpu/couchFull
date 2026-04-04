@@ -58,5 +58,7 @@ func dword main ( )
 		a --;
 	}
 	
+	z = - m.i + x - 0;
+	
 	return;
 }
