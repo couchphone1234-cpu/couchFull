@@ -966,7 +966,7 @@ bool expression ( int scope , symbol *& operand )
 	}
 	
 	//while not at the end of the expression @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	while ( tok.type == '+' or tok.type == '-' or tok.type == '*' or tok.type == '\\' or tok.type == AND or tok.type == '=' or
+	while ( tok.type == '+' or tok.type == '-' or tok.type == '*' or tok.type == '/' or tok.type == AND or tok.type == '=' or
 			  tok.type == LOGICAL_EQ or tok.type == GREAT_EQ or tok.type == LESS_EQ or tok.type == NOT_EQ or
 			  tok.type == '>' or tok.type == '<' )
 	{	//get the operator #######################
@@ -980,7 +980,7 @@ bool expression ( int scope , symbol *& operand )
 		//#####################################################################		
 		//Check if higher priority calculations need to be done first #########################
 		//#####################################################################
-		while ( operands.size ( ) >  0 and operators.size ( ) > 0 and opPrec [ op ] <= opPrec [ operators.back ( ) ] ) //number of operators = operands - 1
+		while ( operands.size ( ) >  0 and operators.size ( ) > 0 and opPrec [ op ] < opPrec [ operators.back ( ) ] ) //number of operators = operands - 1
 		{   //get the operands ##################
 			if ( countOfCalculations ++ == 0 )
 			{

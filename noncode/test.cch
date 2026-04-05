@@ -50,15 +50,10 @@ func dword main ( )
 	
 	var mine m;
 	
-	o = m.i;
 
+	z = - m.i + x + 0 / y;
 	
-	while ( a + c < 0 )
-	{
-		a --;
-	}
 	
-	z = - m.i + x - 0;
 	
 	return;
 }

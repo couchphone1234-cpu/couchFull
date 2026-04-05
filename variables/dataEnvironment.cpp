@@ -123,7 +123,7 @@ bool initializeSymbolTable ( )
 	//operator precedence ##########################
 	//##############################################
 	opPrec [ '*' ] = 4;                                                                                                                                          
-	opPrec [ '\\' ] = 4;                                                                                                                                            
+	opPrec [ '/' ] = 4;                                                                                                                                            
 	opPrec [ '%' ] = 4;
 	
 	opPrec [ '-' ] = 3;                                                                                                                                         
