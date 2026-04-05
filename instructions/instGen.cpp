@@ -241,6 +241,8 @@ int dumpInstructions ( )
 	//output the instructions ######################
 	while ( i < numInst )
 	{
+		cout << std::right << setw ( 3 ) <<  i << ". ";
+		
 		//output move instruction #############
 		if ( ( char ) instVec [ i ] -> type == MOVE ) 
 		{
@@ -293,7 +295,7 @@ int dumpInstructions ( )
 		
 		else if ( instVec [ i ] -> type == JUMP_TEST_INST )
 		{
-			cout << "jmp ";  
+			cout << "jmp_test ";  
 			if ( instVec [ i ] -> equ  != 0  )
 				cout << instVec [ i ] -> equ -> lexeme << " ";
 			if ( instVec [ i ] -> lhs != 0  )	

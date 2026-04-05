@@ -79,13 +79,13 @@
 			
 			//output params ##############
 			if ( s.equ != 0  and s.equ -> lexeme.size ( ) > 0 )
-				cout << s.equ -> lexeme << " " << s.type << " ";
+				cout << "equ :" << s.equ -> lexeme << " " << s.type << " ";
 			
 			if ( s.lhs != 0 and s.lhs -> lexeme.size ( ) > 0)
-				cout << s.lhs -> lexeme << " ";
+				cout << "lhs :" <<  s.lhs -> lexeme << " ";
 			
 			if ( s.rhs != 0 and s.rhs -> lexeme.size ( ) > 0 )
-				cout << s.rhs -> lexeme << " ";
+				cout << "rhs : " << s.rhs -> lexeme << " ";
 		
 			//output instruction number @##@@@@@
 			cout << s.instructionNum << endl;

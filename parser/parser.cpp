@@ -1234,6 +1234,7 @@ bool  ifStatementDriver ( int scope )
 		//backpatch the end jumps #######################
 		for ( auto i : backpatchList )
 		{
+			i -> equ = end -> equ;
 			i -> jump = end;
 		}
 	}

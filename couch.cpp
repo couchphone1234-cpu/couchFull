@@ -47,6 +47,7 @@
 	#include <cassert>
 	#include <type_traits>
 	#include <typeinfo>
+	#include <iomanip>
 
 	using namespace std;
 	
@@ -77,6 +78,7 @@
 	#include "instructions/instGen.cpp"
 	#include "parser/debug.cpp"
 	#include "parser/parser.cpp"
+	#include "optimize/flowGraph.cpp"
 	
 	//defines ##################
 	#define DEBUG
@@ -107,12 +109,14 @@ int main ( int argc , char * argv [ ] )
 	
 	//parse the input #################
 	parse ( inputFileName );
+	makeBlockAdjacencyArray (  instVec  );
 	
 	#ifdef DEBUG 
 	//dump symbol table ###############
 	//dumpSymbolTable ( );
 	#endif
 	//addDelayedInstructions ( );
+	debugBlockArray (  );
 	dumpInstructions ( );
 	//dumpScopes ( );
 	dumpErrors ( );
