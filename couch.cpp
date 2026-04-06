@@ -79,6 +79,7 @@
 	#include "parser/debug.cpp"
 	#include "parser/parser.cpp"
 	#include "optimize/flowGraph.cpp"
+	#include "optimize/valueNumber.cpp"
 	
 	//defines ##################
 	#define DEBUG
