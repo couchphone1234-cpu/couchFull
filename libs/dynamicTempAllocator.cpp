@@ -56,7 +56,7 @@
 
 			dynamicTempAllocator ( ); 
 			~dynamicTempAllocator ( ); 
-			type * allocate ( int size );
+			type * allocate ( );
 			int bufferIndex = 0;
 		private:
 		
@@ -167,7 +167,7 @@ dynamicTempAllocator<type>::~dynamicTempAllocator ( )
 * Comments:
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 template <class type>
-type * dynamicTempAllocator<type>::allocate ( int size ) 
+type * dynamicTempAllocator<type>::allocate ( ) 
 { 
 	type * m = new type; //allocate the memory
 

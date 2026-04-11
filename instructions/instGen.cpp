@@ -482,7 +482,7 @@ instruction * addInstruction ( symbol * equ , symbol * lhs , symbol * rhs , int 
 	instruction * ins;
 	
 	//allocate the memory ############################
-	ins = ( instruction * ) dai.allocate ( sizeof ( instruction ) );
+	ins = ( instruction * ) dai.allocate ( );
 	
 	//check the allocation ###########################
 	if ( ins == 0 )
@@ -518,7 +518,7 @@ instruction * addDelayedInstruction ( int type , symbol * equ , symbol * lhs , s
 	instruction * ins;
 	
 	//allocate the memory ############################
-	ins = ( instruction * ) dai.allocate ( sizeof ( instruction ) );
+	ins = ( instruction * ) dai.allocate ( );
 	
 	//check the allocation ###########################
 	if ( ins == 0 )
@@ -599,7 +599,7 @@ instruction * addInstructionNoInsert ( symbol * equ , symbol * lhs , symbol * rh
 	instruction * ins;
 	
 	//allocate the memory ############################
-	ins = ( instruction * ) dai.allocate ( sizeof ( instruction ) );
+	ins = ( instruction * ) dai.allocate ( );
 	
 	//check the allocation ###########################
 	if ( ins == 0 )

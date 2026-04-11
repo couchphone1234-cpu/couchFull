@@ -1274,7 +1274,7 @@ bool structDeclaration ( int scope )
 		return false;
 		
 	//allocate the memory ############################
-	newType = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+	newType = ( symbol * ) das.allocate ( );
 	newType -> initialize ( tok.lexeme , STRUCT , scope , 0 , STRUCT_CATEGORY );
 
     GET_TOKEN ( tok )
@@ -1328,7 +1328,7 @@ bool structDeclaration ( int scope )
 			indexValue = 1;
 		
 		//allocate the memory ############################
-		s = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+		s = ( symbol * ) das.allocate ( );
 		
 		//initialize the symbol and add it to the type member list ####
 		s -> initialize ( name , type , scope , indexValue , BUILT_IN_CATEGORY );

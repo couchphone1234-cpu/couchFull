@@ -88,7 +88,7 @@ symbol * scope::addVariable ( string inputName , int inputType , int inputScope 
 	}
 	
 	//allocate the memory ############################
-	s = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+	s = ( symbol * ) das.allocate ( );
 	
 	//check the allocation ###########################
 	if ( s == 0 )
@@ -134,7 +134,7 @@ symbol * scope::addParameter ( string inputName , int inputType , int inputScope
 	}
 	
 	//allocate the memory ############################
-	s = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+	s = ( symbol * ) das.allocate ( );
 	
 	//check the allocation ###########################
 	if ( s == 0 )
@@ -228,7 +228,7 @@ symbol * scope::getTemp ( int type , int scope , int cells )
 	
 	
 	//allocate the memory ############################
-	s = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+	s = ( symbol * ) das.allocate ( );
 	
 	//check the allocation ###########################
 	if ( s == 0 )
@@ -327,7 +327,7 @@ symbol * scope::cloneSymbol ( symbol * s )
 	symbol * newInstance = 0;
 	
 	//allocate the memory ############################
-	newInstance = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+	newInstance = ( symbol * ) das.allocate ( );
 	newInstance -> initialize ( tok.lexeme , STRUCT , scopeNumber , 0 , STRUCT_CATEGORY );
 	
 	int numberOfMembers = s -> members.size ( );
@@ -337,7 +337,7 @@ symbol * scope::cloneSymbol ( symbol * s )
 	//copy all the members ######################
 	while ( i < numberOfMembers )
 	{
-		symbol * newMember = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+		symbol * newMember = ( symbol * ) das.allocate ( );
 		
 		//initialize memeber 
 		newMember -> lexeme = s -> members [ i ] -> lexeme;

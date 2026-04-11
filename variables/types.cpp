@@ -93,7 +93,7 @@ int addNewType ( string name )
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
  symbol * addNewTypeMember ( int userDefinedType , string name , int type , int scope , int cells ) 
 { 
-	symbol * member = ( symbol * ) das.allocate ( sizeof ( symbol ) );
+	symbol * member = ( symbol * ) das.allocate ( );
 	
 	//type out of range ###################################
 	if ( userDefinedType < 400 or userDefinedType >= currentNewType )

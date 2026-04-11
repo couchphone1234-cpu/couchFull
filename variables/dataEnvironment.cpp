@@ -247,7 +247,7 @@ symbol * immediateTokenToSymbol ( token & tok , int scope )
 	name += to_string ( imNum ++ );
 	
 	//allocate the memory ############################
-	operand = ( symbol * ) das.allocate ( 3 );
+	operand = ( symbol * ) das.allocate ( );
 	
 	//check the allocation ###########################
 	if ( operand == 0 )
