@@ -23,7 +23,10 @@ struct node
 	};
 };
 
-	bool generate3AC DAG (  node * expDAG  );
+	bool expressionDAG ( int scope , symbol *& operand );
+	string makeStringKeyDAG ( symbol * s  ) ;
+	node * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scope  ); 
+	node * treeTo3AC (  node * expDAG , node * accumulator , int scope );
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 *
@@ -41,7 +44,7 @@ struct node
 *
 * Comments:
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-bool expression ( int scope , symbol *& operand ) 
+bool expressionDAG ( int scope , symbol *& operand ) 
 { 
 	vector < symbol * > operands;
 	vector < int > operators;
@@ -134,9 +137,7 @@ bool expression ( int scope , symbol *& operand )
 	}
 	
 	//generate the DAG code #####################
-	generate3AC DAG (  node * expDAG  );
-	
-	operand = result; //save the result ##########
+	operand = generate3AC_DAG (  treeNodes.back ( ) , accumulator , scope  );
 	
 	return true;
 }
@@ -157,7 +158,7 @@ bool expression ( int scope , symbol *& operand )
 *
 * Comments:
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-string makeStringKey ( symbol * s  ) 
+string makeStringKeyDAG ( symbol * s  ) 
 { 
 	string key;
 	
@@ -174,7 +175,7 @@ string makeStringKey ( symbol * s  )
 *
 * Function Name: DAG
 *
-* Parameters:  node * expDAG 
+* Parameters:  node * expDAGTree - the DAG tree 
 *
 * Modifications: 
 *
@@ -184,14 +185,13 @@ string makeStringKey ( symbol * s  )
 *
 * Returns: bool generate3AC
 *
-* Comments: returns expression result.
+* Comments: returns expression result , driver function.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-node * generate3AC DAG (  node * expDAG  ) 
+node * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scope  ) 
 { 
+	node * result  = treeTo3AC (  expDAGTree , accumulator , scope ); 
 
-
-
-	return
+	return result;
 }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -210,12 +210,32 @@ node * generate3AC DAG (  node * expDAG  )
 *
 * Comments:
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-bool treeTo3AC (  node * expDAG  ) 
+node * treeTo3AC (  node * expDAG , node * accumulator , int scope ) 
 { 
+	//calculate the operands for the expression #######
+	node * lhs = treeTo3AC ( expDAG -> lhs , accumulator , scope );
+	node * rhs = treeTo3AC ( expDAG -> rhs , accumulator , scope );
+	
+	//if register load option selected ( use old generation algorithm )
+	if ( CHOOSE_LHS_AS_EXPRESSION_TARGET )
+	{
+		//make the instruction ##################################
+		makeInstruction ( expDAG -> type , accumulator , lhs , rhs , scope );
+		
+		return accumulator;
+	}
+	else if ( CHOOSE_TEMP_AS_EXPRESSION_TARGET )
+	{
+		//get a temp storage location ####
+		symbol * tmp = scopes [ scope ].getTemp ( int type , scope , 0 );
+		
+		//make the instruction ##################################
+		makeInstruction ( expDAG -> type ,  , lhs , rhs , scope );
+		
+		return tmp;
+	}
 
-
-
-	return
+	return 0;
 }
 
 

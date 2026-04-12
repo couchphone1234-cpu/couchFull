@@ -1,0 +1,74 @@
+In file included from .\couch.cpp:80:
+.\parser/parser.cpp: In function 'bool expressionDAG(int, symbol*&)':
+.\parser/parser.cpp:1588:58: error: cannot convert 'node*' to 'symbol*'
+ 1588 |                                 key = makeStringKeyDAG ( lhs ) + to_string ( stackOp ) + makeStringKey ( rhs );
+      |                                                          ^~~
+      |                                                          |
+      |                                                          node*
+In file included from .\couch.cpp:61:
+.\h_files/parser.h:128:44: note:   initializing argument 1 of 'std::string makeStringKeyDAG(symbol*)'
+  128 |         string makeStringKeyDAG ( symbol * s  ) ;
+      |                                   ~~~~~~~~~^
+.\parser/parser.cpp:1588:90: error: 'makeStringKey' was not declared in this scope; did you mean 'makeStringKeyDAG'?
+ 1588 |                                 key = makeStringKeyDAG ( lhs ) + to_string ( stackOp ) + makeStringKey ( rhs );
+      |                                                                                          ^~~~~~~~~~~~~
+      |                                                                                          makeStringKeyDAG
+.\parser/parser.cpp:1590:58: error: cannot convert 'node*' to 'symbol*'
+ 1590 |                                 key = makeStringKeyDAG ( lhs ) + IDToKeywords [ stackOp ] + makeStringKey ( rhs );
+      |                                                          ^~~
+      |                                                          |
+      |                                                          node*
+.\h_files/parser.h:128:44: note:   initializing argument 1 of 'std::string makeStringKeyDAG(symbol*)'
+  128 |         string makeStringKeyDAG ( symbol * s  ) ;
+      |                                   ~~~~~~~~~^
+.\parser/parser.cpp:1590:93: error: 'makeStringKey' was not declared in this scope; did you mean 'makeStringKeyDAG'?
+ 1590 |                                 key = makeStringKeyDAG ( lhs ) + IDToKeywords [ stackOp ] + makeStringKey ( rhs );
+      |                                                                                             ^~~~~~~~~~~~~
+      |                                                                                             makeStringKeyDAG
+.\parser/parser.cpp:1596:62: error: request for member 'addExpression' in 'newExp', which is of pointer type 'node*' (maybe you meant to use '->' ?)
+ 1596 |                                 treeNodes.push_back ( newExp.addExpression ( operators.back ( ) , lhs , rhs ) );
+      |                                                              ^~~~~~~~~~~~~
+.\parser/parser.cpp:1601:62: error: request for member 'addOperand' in 'newExp', which is of pointer type 'node*' (maybe you meant to use '->' ?)
+ 1601 |                                 treeNodes.push_back ( newExp.addOperand ( expMap.find ( key ) ) );
+      |                                                              ^~~~~~~~~~
+.\parser/parser.cpp:1611:47: error: request for member 'operand' in 'newLeaf', which is of pointer type 'node*' (maybe you meant to use '->' ?)
+ 1611 |                 treeNodes.push_back ( newLeaf.operand ( c_operand ) );
+      |                                               ^~~~~~~
+.\parser/parser.cpp:1626:63: error: 'newExp' was not declared in this scope
+ 1626 |                                         treeNodes.push_back ( newExp.addExpression ( operators.back ( ) , lhs , rhs ) );
+      |                                                               ^~~~~~
+.\parser/parser.cpp:1638:35: error: cannot convert 'node*' to 'symbol*' in assignment
+ 1638 |         operand = generate3AC_DAG (  treeNodes.back ( ) , accumulator , scope  );
+      |                   ~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                   |
+      |                                   node*
+.\parser/parser.cpp: In function 'node* generate3AC_DAG(node*, symbol*, int)':
+.\parser/parser.cpp:1690:52: error: cannot convert 'symbol*' to 'node*'
+ 1690 |         node * result  = treeTo3AC (  expDAGTree , accumulator , scope );
+      |                                                    ^~~~~~~~~~~
+      |                                                    |
+      |                                                    symbol*
+.\h_files/parser.h:130:52: note:   initializing argument 2 of 'node* treeTo3AC(node*, node*, int)'
+  130 |         node * treeTo3AC (  node * expDAG , node * accumulator , int scope );
+      |                                             ~~~~~~~^~~~~~~~~~~
+.\parser/parser.cpp: In function 'node* treeTo3AC(node*, node*, int)':
+.\parser/parser.cpp:1721:52: error: cannot convert 'node*' to 'symbol*'
+ 1721 |                 makeInstruction ( expDAG -> type , accumulator , lhs , rhs , scope );
+      |                                                    ^~~~~~~~~~~
+      |                                                    |
+      |                                                    node*
+In file included from .\couch.cpp:78:
+.\instructions/instGen.cpp:176:53: note:   initializing argument 2 of 'instruction* makeInstruction(int, symbol*, symbol*, symbol*, int, std::string)'
+  176 | instruction * makeInstruction ( int type , symbol * equ , symbol * lhs , symbol * rhs , int scope , string notes )
+      |                                            ~~~~~~~~~^~~
+.\parser/parser.cpp:1728:59: error: expected primary-expression before 'int'
+ 1728 |                 symbol * tmp = scopes [ scope ].getTemp ( int type , scope , 0 );
+      |                                                           ^~~
+.\parser/parser.cpp:1731:53: error: expected primary-expression before ',' token
+ 1731 |                 makeInstruction ( expDAG -> type ,  , lhs , rhs , scope );
+      |                                                     ^
+.\parser/parser.cpp:1733:24: error: cannot convert 'symbol*' to 'node*' in return
+ 1733 |                 return tmp;
+      |                        ^~~
+      |                        |
+      |                        symbol*

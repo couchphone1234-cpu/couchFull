@@ -72,6 +72,31 @@
 	//call stack ########################
 	vector < functionCall > callStack;
 	
+	//DAG tree node ##############
+	struct node
+	{
+		int type;
+		
+		node * lhs = 0;
+		node * rhs = 0;
+		node * equ = 0;
+		
+		bool addExpression ( int type_in , node * lhs_in , node * rhs_in )
+		{
+			type = type_in;
+			lhs = lhs_in;
+			rhs = rhs_in;
+			return true;
+		};
+		
+		bool operand ( node * op )
+		{
+			type = IDENTIFIER;
+			lhs = op;
+			return true;
+		};
+	};
+	
 
 //##################################################################################
 
@@ -96,6 +121,12 @@
 	bool loopStatementList ( int scope , instruction * testLabel , instruction * endLabel );
 	bool continueStatement ( int scope , instruction * testLabel );
 	bool brakeStatement ( int scope , instruction * endLoopLabel );
+	
+	//DAG expression function ######################
+	bool expressionDAG ( int scope , symbol *& operand );
+	string makeStringKeyDAG ( symbol * s  ) ;
+	node * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scope  ); 
+	node * treeTo3AC (  node * expDAG , node * accumulator , int scope );
 	
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
