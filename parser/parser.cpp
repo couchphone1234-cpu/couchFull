@@ -1585,20 +1585,20 @@ bool expressionDAG ( int scope , symbol *& operand )
 			
 			//make the expression key #####################
 			if ( stackOp < 127 )
-				key = makeStringKeyDAG ( lhs ) + to_string ( stackOp ) + makeStringKey ( rhs );
+				key = makeStringKeyDAG ( lhs -> equ ) + to_string ( stackOp ) + makeStringKeyDAG ( rhs -> equ );
 			else 
-				key = makeStringKeyDAG ( lhs ) + IDToKeywords [ stackOp ] + makeStringKey ( rhs );
+				key = makeStringKeyDAG ( lhs -> equ ) + IDToKeywords [ stackOp ] + makeStringKeyDAG ( rhs -> equ );
 				
 			//if the key isn't in the map , just build the node #########
 			if ( expMap.find ( key ) == expMap.end ( ) )
 			{
 				//push the result back on the stack #############
-				treeNodes.push_back ( newExp.addExpression ( operators.back ( ) , lhs , rhs ) );
+				treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
 			}
 			//if the key is in the map , use a calculation that's already done ****
 			else 
 			{
-				treeNodes.push_back ( newExp.addOperand ( expMap.find ( key ) ) );
+				treeNodes.push_back ( newExp -> operand ( expMap.find ( key ) -> second -> equ ) );
 			}
 			
 			//treeNodes.pop_back ( );
@@ -1608,7 +1608,7 @@ bool expressionDAG ( int scope , symbol *& operand )
 		//else put the operator on the stack ########
 		operators.push_back ( op );
 		node * newLeaf = nas.allocate ( );
-		treeNodes.push_back ( newLeaf.operand ( c_operand ) );
+		treeNodes.push_back ( newLeaf -> operand ( c_operand ) );
 	} //end of main expression loop #########################
 	
 	//###############################################################
@@ -1621,9 +1621,10 @@ bool expressionDAG ( int scope , symbol *& operand )
 			do {	//make the instruction ##############
 					node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
 					node * rhs = treeNodes.back ( ); treeNodes.pop_back ( );
+					node * newExp = nas.allocate ( );
 					
 					//push the result back on the stack #############
-					treeNodes.push_back ( newExp.addExpression ( operators.back ( ) , lhs , rhs ) );
+					treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
 
 					operators.pop_back ( );//pop the back of the operator stack
 					
@@ -1685,11 +1686,11 @@ string makeStringKeyDAG ( symbol * s  )
 *
 * Comments: returns expression result , driver function.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-node * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scope  ) 
+symbol * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scope  ) 
 { 
 	node * result  = treeTo3AC (  expDAGTree , accumulator , scope ); 
 
-	return result;
+	return result -> equ;
 }
 
 /*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -1708,7 +1709,7 @@ node * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scope 
 *
 * Comments:
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-node * treeTo3AC (  node * expDAG , node * accumulator , int scope ) 
+node * treeTo3AC (  node * expDAG , symbol * accumulator , int scope ) 
 { 
 	//calculate the operands for the expression #######
 	node * lhs = treeTo3AC ( expDAG -> lhs , accumulator , scope );
@@ -1718,19 +1719,21 @@ node * treeTo3AC (  node * expDAG , node * accumulator , int scope )
 	if ( CHOOSE_LHS_AS_EXPRESSION_TARGET )
 	{
 		//make the instruction ##################################
-		makeInstruction ( expDAG -> type , accumulator , lhs , rhs , scope );
+		makeInstruction ( expDAG -> type , accumulator , lhs -> equ , rhs -> equ , scope );
+		node * newLeaf = nas.allocate ( );
 		
-		return accumulator;
+		return newLeaf -> operand ( accumulator ); 
 	}
 	else if ( CHOOSE_TEMP_AS_EXPRESSION_TARGET )
 	{
 		//get a temp storage location ####
-		symbol * tmp = scopes [ scope ].getTemp ( int type , scope , 0 );
+		symbol * tmp = scopes [ scope ].getTemp ( INT , scope , 0 );
 		
 		//make the instruction ##################################
-		makeInstruction ( expDAG -> type ,  , lhs , rhs , scope );
+		makeInstruction ( expDAG -> type , accumulator , lhs -> equ , rhs -> equ , scope );
+		node * newLeaf = nas.allocate ( );
 		
-		return tmp;
+		return newLeaf -> operand ( tmp ); 
 	}
 
 	return 0;
