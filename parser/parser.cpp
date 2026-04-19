@@ -235,7 +235,7 @@ bool function (  )
 		//possible expression ##############
 		else if ( isExpressionStart ( tok.type ) )
 		{
-			expression ( scope , result );
+			expressionDAG ( scope , result );
 		}
 		
 		else if ( tok.type == STRUCT )
@@ -304,8 +304,8 @@ bool whileLoop ( int scope )
 	
 	GET_TOKEN ( tok )
 	
-	//get the test expression ######################
-	if ( expression ( scope , expResult ) == false )
+	//get the test expressionDAG ######################
+	if ( expressionDAG ( scope , expResult ) == false )
 		return false;
 	
 	//jump to test ####################################
@@ -405,7 +405,7 @@ bool ifStatement ( int scope , vector < instruction * > & backpatchList )
 	GET_TOKEN ( tok )
 	
 	//get the test expression ######################
-	if ( expression ( scope , expResult ) == false )
+	if ( expressionDAG ( scope , expResult ) == false )
 		return false;
 	
 	//jump out or next on zero
@@ -699,7 +699,7 @@ bool basis ( int scope , symbol *& operand )
 				GET_TOKEN ( tok )//get next 
 				
 				//check for expression fail ######################
-				if ( expression ( scope , expResult ) == false )
+				if ( expressionDAG ( scope , expResult ) == false )
 					return false;
 				
 				//expect ']' ##########################################
@@ -747,7 +747,7 @@ bool basis ( int scope , symbol *& operand )
 				//get the next token ##############
 				GET_TOKEN ( tok )//get after (
 				
-				if ( expression ( scope , expResult ) == false ) 
+				if ( expressionDAG ( scope , expResult ) == false ) 
 					return false;
 				
 				//make a push instuction ############
@@ -763,7 +763,7 @@ bool basis ( int scope , symbol *& operand )
 						break;
 					
 					//get next expression ###############
-					if ( expression ( scope , expResult ) == false ) 
+					if ( expressionDAG ( scope , expResult ) == false ) 
 						return false;
 				
 					//make a push instuction ############
@@ -901,7 +901,7 @@ bool statementList ( int scope )
 		//identifier ##############
 		else if ( isExpressionStart ( tok.type ) )
 		{
-			expression ( scope , result );
+			expressionDAG ( scope , result );
 		}
 		
 		//declaration #############
@@ -955,11 +955,12 @@ bool expression ( int scope , symbol *& operand )
 	//put the operand on the stack ###########
 	result = c_operand;
 	
+	//if this expression is of the form ( a = b + c ) , make a the accumulator
 	if ( tok.type == '=' )
 	{
 		accumulator = c_operand; //default return
 	}
-	else
+	else //else set up a new accumulator temp expressions of the form ( b + c )
 	{
 		accumulator = scopes [ scope ].getTemp ( INT , scope , 0 );
 		operands.push_back ( c_operand );
@@ -1385,7 +1386,7 @@ bool returnStatement ( int scope )
 	else if ( isExpressionStart ( tok.type ) ) 
 	{
 		//if the expression parses correctly #########################
-		if ( expression ( scope , result ) == true )
+		if ( expressionDAG ( scope , result ) == true )
 		{
 			makeInstruction ( RETURN_STATEMENT , result , 0 , 0, scope ); //make the return value function 
 		}
@@ -1431,7 +1432,7 @@ bool loopStatementList ( int scope , instruction * testLabel , instruction * end
 		//identifier ##############
 		else if ( isExpressionStart ( tok.type ) )
 		{
-			expression ( scope , result );
+			expressionDAG ( scope , result );
 		}
 		
 		//declaration #############
@@ -1561,6 +1562,17 @@ bool expressionDAG ( int scope , symbol *& operand )
 	//put the operand on the stack ###########
 	result = c_operand;
 	
+	//if this expression is of the form ( a = b + c ) , make a the accumulator
+	if ( tok.type == '=' )
+	{
+		accumulator = c_operand; //default return
+	}
+	else //else set up a new accumulator temp expressions of the form ( b + c )
+	{
+		accumulator = scopes [ scope ].getTemp ( INT , scope , 0 );
+		operands.push_back ( c_operand );
+	}
+	
 	//while not at the end of the expression @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	while ( tok.type == '+' or tok.type == '-' or tok.type == '*' or tok.type == '/' or tok.type == AND or tok.type == '=' or
 			  tok.type == LOGICAL_EQ or tok.type == GREAT_EQ or tok.type == LESS_EQ or tok.type == NOT_EQ or
@@ -1576,7 +1588,7 @@ bool expressionDAG ( int scope , symbol *& operand )
 		//#####################################################################		
 		//Check if higher priority calculations need to be done first #########################
 		//#####################################################################
-		while ( operands.size ( ) >  1 and operators.size ( ) > 0 and opPrec [ op ] < opPrec [ operators.back ( ) ] ) //number of operators = operands - 1
+		while ( treeNodes.size ( ) >  1 and operators.size ( ) > 0 and opPrec [ op ] < opPrec [ operators.back ( ) ] ) //number of operators = operands - 1
 		{   			
 			node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
 			node * rhs = treeNodes.back ( ); treeNodes.pop_back ( );
@@ -1614,25 +1626,22 @@ bool expressionDAG ( int scope , symbol *& operand )
 	//###############################################################
 	//calculate the rest of the stack if it's not empty #############
 	//###############################################################
-	if ( operators.size ( ) > 0 and operands.size ( ) > 0 )
+	if ( treeNodes.size ( ) > 1 and operators.size ( ) >  0 )
 	{
-		if ( operands.size ( ) > 0 and operators.size ( ) >  0 )
-		{
-			do {	//make the instruction ##############
-					node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
-					node * rhs = treeNodes.back ( ); treeNodes.pop_back ( );
-					node * newExp = nas.allocate ( );
-					
-					//push the result back on the stack #############
-					treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
+		do {	//make the instruction ##############
+				node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
+				node * rhs = treeNodes.back ( ); treeNodes.pop_back ( );
+				node * newExp = nas.allocate ( );
+				
+				//push the result back on the stack #############
+				treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
 
-					operators.pop_back ( );//pop the back of the operator stack
-					
-					//no operators left #################
-					if ( operators.size ( ) == 0 or operands.size ( ) == 1 )
-						break;
-			} while ( 1 );
-		}
+				operators.pop_back ( );//pop the back of the operator stack
+				
+				//no operators left #################
+				if ( operators.size ( ) == 0 or treeNodes.size ( ) == 1 )
+					break;
+		} while ( 1 );
 	}
 	
 	//generate the DAG code #####################
@@ -1711,9 +1720,23 @@ symbol * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scop
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 node * treeTo3AC (  node * expDAG , symbol * accumulator , int scope ) 
 { 
+	node * lhs = 0;
+	node * rhs = 0;
+	
+	if ( expDAG == 0 )
+		return 0;
+	
 	//calculate the operands for the expression #######
-	node * lhs = treeTo3AC ( expDAG -> lhs , accumulator , scope );
-	node * rhs = treeTo3AC ( expDAG -> rhs , accumulator , scope );
+	if ( expDAG -> lhs and expDAG -> rhs )
+	{
+		lhs = treeTo3AC ( expDAG -> lhs , accumulator , scope );
+		rhs = treeTo3AC ( expDAG -> rhs , accumulator , scope );
+	}
+	else 
+	{	
+		return expDAG;
+	}
+
 	
 	//if register load option selected ( use old generation algorithm )
 	if ( CHOOSE_LHS_AS_EXPRESSION_TARGET )

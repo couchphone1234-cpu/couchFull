@@ -1,1 +1,1 @@
-""C:\Program Files\7-Zip\7z" a -p!@#$qwe -mhe=on "C:\programs\couch_4.12.2026(4.47.4a.m.)(CODE).7z" "C:\programs\couch""
+7z a '-p!@#$qwe' -mhe=on "/home/user/programs/couch_4.16.2026(3.59.51a.m.).7z" "/home/user/programs/couch"

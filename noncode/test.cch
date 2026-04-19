@@ -51,9 +51,9 @@ func dword main ( )
 	var mine m;
 	
 
-	z = - m.i + x + 0 / y;
+	//z = - m.i + x + 0 / y;
 	
-	if ( z + y > 0 )
+	if ( o = z + y > 0 )
 	{
 		c = a - 1;	
 	}
