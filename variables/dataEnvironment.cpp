@@ -138,6 +138,8 @@ bool initializeSymbolTable ( )
 	opPrec [ GREATER_THAN ] = 2;
 	opPrec [ LESS_THAN ] = 2;
 	opPrec [ EQUALS ] = 2;
+	opPrec [ '>' ] = 1;
+	opPrec [ '<' ] = 1;
 	
 	opPrec [ '=' ] = 1;
 	

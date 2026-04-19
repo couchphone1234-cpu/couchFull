@@ -1554,6 +1554,10 @@ bool expressionDAG ( int scope , symbol *& operand )
 	map < string , node * > expMap;
 	string key;
 	string strOp;
+	int backOp = 0;
+	int pres1 = 0;
+	int pres2 = 0;
+	int treeSize = 0;
 	
 	//get an operand ########################
 	if ( basis ( scope , c_operand ) == false )
@@ -1570,7 +1574,8 @@ bool expressionDAG ( int scope , symbol *& operand )
 	else //else set up a new accumulator temp expressions of the form ( b + c )
 	{
 		accumulator = scopes [ scope ].getTemp ( INT , scope , 0 );
-		operands.push_back ( c_operand );
+		node * l = nas.allocate ( );
+		treeNodes.push_back ( l -> operand ( c_operand ) );	
 	}
 	
 	//while not at the end of the expression @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -1588,10 +1593,17 @@ bool expressionDAG ( int scope , symbol *& operand )
 		//#####################################################################		
 		//Check if higher priority calculations need to be done first #########################
 		//#####################################################################
-		while ( treeNodes.size ( ) >  1 and operators.size ( ) > 0 and opPrec [ op ] < opPrec [ operators.back ( ) ] ) //number of operators = operands - 1
+		if ( operators.size ( ) > 0 )
+		{			
+			backOp = operators.back ( );
+			pres1 = opPrec [ op ];
+			pres2 = opPrec [ backOp ];
+			treeSize = treeNodes.size ( );
+		}
+		while ( treeNodes.size ( ) >  1 and operators.size ( ) > 0 and opPrec [ op ] < opPrec [ backOp ] ) //number of operators = operands - 1
 		{   			
-			node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
 			node * rhs = treeNodes.back ( ); treeNodes.pop_back ( );
+			node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
 			node * newExp = nas.allocate ( );
 			int stackOp = operators.back ( );
 			
@@ -1629,8 +1641,8 @@ bool expressionDAG ( int scope , symbol *& operand )
 	if ( treeNodes.size ( ) > 1 and operators.size ( ) >  0 )
 	{
 		do {	//make the instruction ##############
-				node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
 				node * rhs = treeNodes.back ( ); treeNodes.pop_back ( );
+				node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
 				node * newExp = nas.allocate ( );
 				
 				//push the result back on the stack #############

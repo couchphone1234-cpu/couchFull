@@ -53,7 +53,7 @@ func dword main ( )
 
 	//z = - m.i + x + 0 / y;
 	
-	if ( o = z + y > 0 )
+	if (  z + y > 0 )
 	{
 		c = a - 1;	
 	}
