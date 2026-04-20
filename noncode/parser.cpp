@@ -1558,7 +1558,6 @@ bool expressionDAG ( int scope , symbol *& operand )
 	int pres1 = 0;
 	int pres2 = 0;
 	int treeSize = 0;
-	int recursionLevel;
 	
 	//get an operand ########################
 	if ( basis ( scope , c_operand ) == false )
@@ -1618,9 +1617,8 @@ bool expressionDAG ( int scope , symbol *& operand )
 			if ( expMap.find ( key ) == expMap.end ( ) )
 			{
 				//push the result back on the stack #############
-				node * newNode = newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator );
-				treeNodes.push_back ( newNode );
-				expMap [ key ] = newNode;
+				treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
+				expMap [ key ] = treeNodes.back ( );
 			}
 			//if the key is in the map , use a calculation that's already done ****
 			else 
@@ -1643,35 +1641,14 @@ bool expressionDAG ( int scope , symbol *& operand )
 	//###############################################################
 	if ( treeNodes.size ( ) > 1 and operators.size ( ) >  0 )
 	{
-		recursionLevel = 0;
-		do {	
-				printTreenodeStack ( treeNodes , recursionLevel );
-				//make the instruction ##############
+		do {	//make the instruction ##############
 				node * rhs = treeNodes.back ( ); treeNodes.pop_back ( );
 				node * lhs = treeNodes.back ( ); treeNodes.pop_back ( );
 				node * newExp = nas.allocate ( );
 				
 				//push the result back on the stack #############
-				//treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
-				//make the expression key #####################
-				if ( operators.back ( ) < 127 )
-					key = makeStringKeyDAG ( lhs -> equ ) + to_string ( operators.back ( ) ) + makeStringKeyDAG ( rhs -> equ );
-				else 
-					key = makeStringKeyDAG ( lhs -> equ ) + IDToKeywords [ operators.back ( ) ] + makeStringKeyDAG ( rhs -> equ );
-					
-				//if the key isn't in the map , just build the node #########
-				if ( expMap.find ( key ) == expMap.end ( ) )
-				{
-					//push the result back on the stack #############
-					treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
-					expMap [ key ] = treeNodes.back ( );
-				}
-				//if the key is in the map , use a calculation that's already done ****
-				else 
-				{
-					treeNodes.push_back ( newExp -> operand ( expMap.find ( key ) -> second -> equ ) );
-				}
-				
+				treeNodes.push_back ( newExp -> addExpression ( operators.back ( ) , lhs , rhs , accumulator ) );
+
 				operators.pop_back ( );//pop the back of the operator stack
 				
 				//no operators left #################
@@ -1796,116 +1773,4 @@ node * treeTo3AC (  node * expDAG , symbol * accumulator , int scope )
 	}
 
 	return 0;
-}
-
-/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-*
-* Function Name: printTreenodeStack
-*
-* Parameters:  node * sourceTree
-*
-* Modifications:
-*
-*
-*
-*
-*
-* Returns: bool
-*
-* Comments:
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-bool printTreenodeStack (  vector < node * > & sourceTree , int & recursionLevel )
-{
-	int loop = sourceTree.size ( ) - 1;
-	node * n = 0;
-	cout << recursionLevel << " &*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&" << endl;
-	
-	while ( loop >= 0 )
-	{
-		n = sourceTree [ loop ];
-		cout << "loop number: [ " << loop  << " ]***************************" << endl;
-		
-		cout << "type: " <<  n -> type << " " << endl;
-		
-		if ( n -> equ )
-		{
-			cout << "equ: " << n -> equ -> lexeme << " ";
-		}
-		
-		if ( n -> lhs )
-		{
-			cout << recursionLevel << " lhs: ";
-			printNode ( n -> lhs , recursionLevel + 1 );
-		}
-		
-		if ( n -> rhs )
-		{
-			cout << recursionLevel << " rhs: ";
-			printNode ( n -> rhs , recursionLevel + 1 );
-		}
-		
-		loop --;
-	}
-
-	return true;
-}
-
-/*-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=- FUNCTION DEFINITION -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-*
-* Function Name: printNode
-*
-* Parameters:  node * n
-*
-* Modifications:
-*
-*
-*
-*
-*
-* Returns: bool
-*
-* Comments:
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
-bool printNode (  node * n , int  recursionLevel )
-{
-	int i = 0;
-	
-	while ( i < recursionLevel )
-	{
-		cout << "\t"; i ++;
-	}
-	
-	cout << recursionLevel << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << endl;
-	
-	i = 0;
-	while ( i < recursionLevel )
-	{
-		cout << "\t"; i ++;
-	}
-	
-	cout << "type: " <<  n -> type << " ";
-	
-	if ( n -> equ )
-	{
-		cout << "equ: " << n -> equ -> lexeme << " ";
-	}
-	
-	if ( n -> lhs )
-	{
-		printNode ( n -> lhs , recursionLevel + 1 );
-	}
-	
-	if ( n -> rhs )
-	{
-		printNode ( n -> rhs , recursionLevel + 1 );
-	}
-
-	i = 0;
-	while ( i < recursionLevel )
-	{
-		cout << "\t"; i ++;
-	}
-	cout << "*************************************" << endl;
-	
-	return true;
 }

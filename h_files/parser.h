@@ -85,11 +85,12 @@
 		node * rhs = 0;
 		symbol * equ = 0;
 		
-		node * addExpression ( int type_in , node * lhs_in , node * rhs_in , symbol * equ )
+		node * addExpression ( int type_in , node * lhs_in , node * rhs_in , symbol * equ_in )
 		{
 			type = type_in;
 			lhs = lhs_in;
 			rhs = rhs_in;
+			equ = equ_in;
 			return this;
 		};
 		
@@ -97,6 +98,8 @@
 		{
 			type = IDENTIFIER;
 			equ = op;
+			lhs = 0;
+			rhs = 0;
 			return this;
 		};
 	};
@@ -131,8 +134,9 @@
 	string makeStringKeyDAG ( symbol * s  ) ;
 	symbol * generate3AC_DAG (  node * expDAGTree , symbol * accumulator ,  int scope  ); 
 	node * treeTo3AC (  node * expDAG , symbol * accumulator , int scope );
+	bool printTreenodeStack (  vector < node * > & sourceTree , int & recursionLevel );
+	bool printNode (  node * n , int recursionLevel );
 	
-
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
